@@ -1,16 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  CContainer,
-  CHeader,
-  CHeaderBrand,
-  CHeaderDivider,
-  CHeaderNav,
-  CHeaderToggler,
-  CNavLink,
-  CNavItem,
-} from '@coreui/react'
+import { CContainer, CHeader, CHeaderBrand, CHeaderDivider, CHeaderNav, CHeaderToggler, CNavLink, CNavItem } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 
@@ -20,14 +11,14 @@ import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const { sidebarShow } = useSelector(state => state.userReducer)
 
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+          onClick={() => dispatch({ type: 'set', payload: sidebarShow })}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
@@ -41,10 +32,10 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
+            <CNavLink to="/users" component={NavLink}>Users</CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink to="/settings" component={NavLink} >Settings</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>

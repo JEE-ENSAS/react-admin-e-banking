@@ -50,9 +50,33 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+
+//  E-banking Components & pages
+const UserList = React.lazy(() => import('./views/users/UserList'))
+const UserForm = React.lazy(() => import('./views/users/UserForm'))
+
+const CardsList = React.lazy(() => import('./views/cards/CardsList'))
+const CardForm = React.lazy(() => import('./views/cards/CardForm'))
+
+const Settings = React.lazy(() => import('./views/settings/Settings'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard, },
+
+  { path: '/users', name: 'user-list', component: UserList, exact: true },
+  { path: '/users/{id}', name: 'user-details', component: UserForm, },
+
+  { path: '/cards', name: 'card-list', component: CardsList, },
+  { path: '/cards/{id}', name: 'card-list', component: CardForm },
+
+
+  { path: '/settings', name: 'settings', component: Settings, },
+
+  // should removed 
+
+
+
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

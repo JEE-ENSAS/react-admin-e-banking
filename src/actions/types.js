@@ -1,0 +1,13 @@
+// ERROR ACTION
+export const ERROR_ACTION = "ERROR_ACTION";
+
+// LOGIN ACTIONS
+export const AUTH_REGISTER = "AUTH_REGISTER";
+export const AUTH_LOGIN = "AUTH_LOGIN";
+
+
+// USER ACTIONS
+export const FETCH_USERS = "FETCH_USERS";
+export const FETCH_USER = "FETCH_USER";
+export const ENABLE_USER = "ENABLE_USER";
+export const DISABLE_USER = "DISABLE_USER";

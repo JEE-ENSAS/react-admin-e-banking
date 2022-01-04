@@ -1,20 +1,17 @@
-import React from 'react'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
+import React, { useState } from 'react'
+import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { useDispatch } from "react-redux"
+import { registerAction } from '../../../actions/authAction'
 
 const Register = () => {
+  const dispatch = useDispatch()
+  const [registerForm, setRegisterForm] = useState({ username: '', password: '', repassword: '', email: '', })
+  const signUp = (e) => {
+    e.preventDefault()
+    dispatch(registerAction({ ...registerForm, roles: ['agent'] }))
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -29,11 +26,11 @@ const Register = () => {
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
-                    <CFormInput placeholder="Username" autoComplete="username" />
+                    <CFormInput placeholder="Username" autoComplete="username" value={registerForm.username} onChange={e => setRegisterForm({ ...registerForm, username: e.target.value })} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
-                    <CFormInput placeholder="Email" autoComplete="email" />
+                    <CFormInput placeholder="Email" autoComplete="email" value={registerForm.email} onChange={e => setRegisterForm({ ...registerForm, email: e.target.value })} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
@@ -43,6 +40,7 @@ const Register = () => {
                       type="password"
                       placeholder="Password"
                       autoComplete="new-password"
+                      value={registerForm.password} onChange={e => setRegisterForm({ ...registerForm, password: e.target.value })}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -53,10 +51,11 @@ const Register = () => {
                       type="password"
                       placeholder="Repeat password"
                       autoComplete="new-password"
+                      value={registerForm.repassword} onChange={e => setRegisterForm({ ...registerForm, repassword: e.target.value })}
                     />
                   </CInputGroup>
                   <div className="d-grid">
-                    <CButton color="success">Create Account</CButton>
+                    <CButton color="success" onClick={e => signUp(e)} >Create Account</CButton>
                   </div>
                 </CForm>
               </CCardBody>
