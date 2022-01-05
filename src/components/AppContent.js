@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
 
 import routes from '../routes'
+import PrivateRoute from 'src/helpers/PrivateRoute'
 
 const AppContent = () => {
   return (
@@ -11,12 +12,20 @@ const AppContent = () => {
         <Switch>
           {routes.map((route, idx) => {
             return (
-              route.component && (
+              !route.private ? (
                 <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={(props) => (<>  <route.component {...props} />  </>)} />
               )
+                :
+                (
+                  <PrivateRoute  exact={route.exact} name={route.name} path={route.path} key={idx} >
+                    <route.component    />
+                  </PrivateRoute>
+                )
 
             )
           })}
+
+
           <Redirect from="/" to="/dashboard" />
         </Switch>
       </Suspense>

@@ -4,14 +4,25 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useDispatch } from "react-redux"
 import { registerAction } from '../../../actions/authAction'
+import { useHistory } from 'react-router-dom'
 
 const Register = () => {
   const dispatch = useDispatch()
+  
+  const history = useHistory()
+
   const [registerForm, setRegisterForm] = useState({ username: '', password: '', repassword: '', email: '', })
-  const signUp = (e) => {
+  
+  const signUp = async (e) => {
     e.preventDefault()
-    dispatch(registerAction({ ...registerForm, roles: ['agent'] }))
+    const response = await    dispatch(registerAction({ ...registerForm, roles: ['agent'] }))
+    if(response && response.message) {
+      history.push('/login')
+    }
+  
   }
+  
+  
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>

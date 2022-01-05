@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_REGISTER, ERROR_ACTION } from "./types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, ERROR_ACTION } from "./types";
 import AuthService from "../services/auth.service";
 import { showSuccessSwal } from "../helpers/SweetAlert";
 
@@ -12,17 +12,17 @@ export const loginAction = (loginForm) => async (dispatch) => {
       });
       return Promise.resolve(error);
     } else {
-      const user ={
+      const user = {
         id: data.id,
-        username: data.username ,
+        username: data.username,
         email: data.email,
-        roles: data.roles ,
+        roles: data.roles,
       }
       dispatch({
         type: AUTH_LOGIN,
         payload: { user, token: data.accessToken },
       });
-      console.log('data', data )
+      console.log('data', data)
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       showSuccessSwal({ title: `you're log in ` })
@@ -49,10 +49,17 @@ export const registerAction = (registerForm) => async (dispatch) => {
         payload: data,
       });
       showSuccessSwal({ title: data.message })
-      
+
       return Promise.resolve(data);
     }
   } catch (err) {
     return Promise.reject(err);
   }
+}
+
+
+export const logOutAction = () => (dispatch) => {
+
+  dispatch({ type: AUTH_LOGOUT, payload: {} })
+
 }
