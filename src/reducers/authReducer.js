@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_REGISTER, ERROR_ACTION } from "../actions/types";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_REGISTER, ERROR_ACTION } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
 const token = JSON.parse(localStorage.getItem("token")) || null;
@@ -30,6 +30,15 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         message: payload,
+      }
+
+    case AUTH_LOGOUT:
+      return {
+        isAuthenticated: false,
+        user: null,
+        token: null,
+        error: "",
+        message: ""
       }
 
     case ERROR_ACTION:

@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault()
     const res = await dispatch(loginAction(loginForm))
     if (res && res.accessToken) {
-      history.push('/')
+      history.push('/dashboard')
     }
   }
 
