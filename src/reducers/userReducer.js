@@ -1,7 +1,10 @@
+import { usersData } from "src/mock-data/users";
 import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS } from "../actions/types";
 
+
+
 const initialState = {
-    users: [],
+    users: usersData,
     user: {},
     sidebarShow: true,
     sidebarUnfoldable: true,

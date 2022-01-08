@@ -64,11 +64,11 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard, },
 
-  { path: '/users', name: 'user-list', component: UserList, exact: true, private: true },
+  { path: '/users', name: 'users', component: UserList, exact: true, private: true },
   { path: '/users/{id}', name: 'user-details', component: UserForm, private: true },
 
-  { path: '/cards', name: 'card-list', component: CardsList, private: true },
-  { path: '/cards/{id}', name: 'card-list', component: CardForm, private: true },
+  { path: '/cards', name: 'cards', component: CardsList, private: true },
+  { path: '/cards/{id}', name: 'card-details', component: CardForm, private: true },
 
 
   { path: '/settings', name: 'settings', component: Settings, private: true },

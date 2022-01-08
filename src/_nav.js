@@ -1,19 +1,9 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import { cilMoney, cilPeople, cilCreditCard, cilSettings } from '@coreui/icons'
+import { cilPeople, cilCreditCard, cilSettings } from '@coreui/icons'
 import { CNavItem } from '@coreui/react'
 
 const _nav = [
-  {
-    component: CNavItem,
-    to: '/dashboard',
-    name: 'Transfer Money',
-    icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
-    bgColor: 'red',
-    badge: {
-      color: 'primary',
-    },
-  },
   {
     component: CNavItem,
     name: 'Users',
