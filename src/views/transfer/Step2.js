@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { cilDollar } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 import {
   CButton,
   CCard,
@@ -11,10 +14,13 @@ import {
   CInputGroupText,
   CInputGroup,
   CFormInput,
+  CForm,
+  CFormSelect,
 } from "@coreui/react";
-import React from "react";
+import { useDispatch } from "react-redux";
+import { SET_TRANSFERT_INFO } from "src/actions/types";
 
-const Step2 = ({ dataSource, dataDestaination, setStep }) => {
+const Step2 = ({ dataSource, dataDestination, setStep  }) => {
   return (
     <>
       <CRow className="mt-5">
@@ -29,11 +35,11 @@ const Step2 = ({ dataSource, dataDestaination, setStep }) => {
           <CardConfirmation
             setStep={setStep}
             header="Destainataire"
-            data={dataDestaination}
+            data={dataDestination}
           />
         </CCol>
         <CCol style={{ padding: "1rem 1rem" }}>
-          <CardPrice />
+          <CardPrice  />
         </CCol>
       </CRow>
     </>
@@ -71,36 +77,69 @@ const CardConfirmation = ({ data, header, setStep }) => {
 };
 
 const CardPrice = () => {
+  const [transferInfo, setTransferInfo] = useState({
+    soustraction: "source",
+    price: 0,
+    motif: '',
+  });
+  const dispatch = useDispatch();
+  const dispatchTransferHandler = (value, field) => {
+    setTransferInfo({ ...transferInfo, [field]: value });
+    dispatch({ type: SET_TRANSFERT_INFO, payload: { value, field } });
+  };
   return (
-    <>
-      <CCard className="text-center">
-        <CCardHeader> Prix&Motif </CCardHeader>
-        <CCardBody>
-          {/* <CCardTitle> </CCardTitle> */}
-          <CCardText className="py-5">
-            <CInputGroup size="sm" className="mb-4">
-              <CInputGroupText id="inputGroup-sizing-sm">Prix</CInputGroupText>
-              <CFormInput
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-sm"
-              />
-            </CInputGroup>
-            <CInputGroup className="">
-              <CInputGroupText id="inputGroup-sizing-default">
-                Motif
+    <CCard className="text-center">
+      <CCardHeader>
+        <CInputGroup className="">
+          <CInputGroupText component="label" htmlFor="inputGroupSelect01">
+            Soustraction
+          </CInputGroupText>
+          <CFormSelect
+            id="inputGroupSelect01"
+            value={transferInfo.soustraction}
+            onChange={(e) =>
+              dispatchTransferHandler(e.target.value, "soustraction")
+            }
+          >
+            <option>Soustraction: </option>
+            <option value="source"> From Source </option>
+            <option value="destainataire">From Destainataire </option>
+            <option value="both"> Both </option>
+          </CFormSelect>
+        </CInputGroup>
+      </CCardHeader>
+      <CCardBody>
+        <CCardText className="py-5">
+          <CForm>
+            <CInputGroup className="mb-3">
+              <CInputGroupText>
+                <CIcon icon={cilDollar} />
               </CInputGroupText>
               <CFormInput
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default"
+                placeholder="prix"
+                value={transferInfo.price}
+                onChange={(e) =>
+                  dispatchTransferHandler(e.target.value, "price")
+                }
               />
             </CInputGroup>
-          </CCardText>
-          {/* <CButton>Modfier</CButton> */}
-        </CCardBody>
+            <CInputGroup style={{ marginTop: "2.8rem" }}>
+              <CInputGroupText>Motif</CInputGroupText>
+              <CFormInput
+                placeholder="Motif"
+                value={transferInfo.motif}
+                onChange={(e) =>
+                  dispatchTransferHandler(e.target.value, "motif")
+                }
+              />
+            </CInputGroup>
+          </CForm>
+        </CCardText>
+      </CCardBody>
 
-        <CCardFooter className="text-medium-emphasis">2 days ago</CCardFooter>
-      </CCard>
-    </>
+      <CCardFooter className="text-medium-emphasis">
+        Lorem ipsum dolor sit amet.
+      </CCardFooter>
+    </CCard>
   );
 };
-  

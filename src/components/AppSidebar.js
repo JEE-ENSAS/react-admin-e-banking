@@ -19,13 +19,9 @@ const AppSidebar = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-  const [dataSource, setDataSource] = useState({ client: null, compte: null });
 
-  const [dataDestaination, setDataDestaination] = useState({
-    client: null,
-    compte: null,
-  });
-  const [step, setStep] = useState(dataSource.compte ? 1 : 0);
+  const [step, setStep] = useState(0);
+
   const { sidebarShow, sidebarUnfoldable } = useSelector(
     (state) => state["userReducer"]
   );
@@ -67,12 +63,8 @@ const AppSidebar = () => {
       <ModalTransfer
         visible={visible}
         setVisible={setVisible}
-        dataSource={dataSource}
-        setDataSource={setDataSource}
-        dataDestaination={dataDestaination}
-        setDataDestaination={setDataDestaination}
         step={step}
-        setStep={setStep}
+        setStep={setStep} 
       />
     </>
   );

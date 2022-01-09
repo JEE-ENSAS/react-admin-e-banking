@@ -1,7 +1,20 @@
-import { CButton, CFormCheck, CListGroup, CListGroupItem, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-import React, { useState } from 'react'
+import {
+  CButton,
+  CFormCheck,
+  CListGroup,
+  CListGroupItem,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+} from "@coreui/react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SET_DATA_DESTINATAIRE, SET_DATA_SOURCE } from "src/actions/types";
 
-const ModalComptes = ({ visible, setVisible, setSelectedCompteHandler }) => {
+const ModalComptes = ({ from, visible, setVisible, step, handelFullModal }) => {
+  const dispatch = useDispatch();
   const [comptes, setComptes] = useState([
     { id: 1, label: "Pricipal Compte", isPrincipal: true, checked: true },
     { id: 2, label: "Second Compte", isPrincipal: false, checked: false },
@@ -21,17 +34,24 @@ const ModalComptes = ({ visible, setVisible, setSelectedCompteHandler }) => {
     const myComptes = comptes.map((item) => {
       return { ...item, checked: item.isPrincipal };
     });
+
     setComptes(myComptes);
-    setSelectedCompteHandler(null);
     setVisible(false);
   };
 
   const saveCompteSelected = () => {
     const compte = comptes.find((item) => item.checked === true);
     if (compte) {
-      setSelectedCompteHandler(compte);
+      if (from === "modal") {
+        dispatch({
+          type: step === 0 ? SET_DATA_SOURCE : SET_DATA_DESTINATAIRE,
+          payload: { compte },
+        });
+      }
+
+      setVisible(false);
+      handelFullModal(true);
     }
-    setVisible(false);
   };
 
   return (
@@ -65,6 +85,5 @@ const ModalComptes = ({ visible, setVisible, setSelectedCompteHandler }) => {
     </>
   );
 };
-  
- 
+
 export default ModalComptes;

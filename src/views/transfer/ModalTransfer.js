@@ -11,93 +11,65 @@ import Step0 from "./Step0";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import NextStepFooter from "./NextStepFooter";
+import { useSelector } from "react-redux";
 
-const ModalTransfer = ({
-  visible,
-  setVisible,
-  step,
-  setStep,
-  dataSource,
-  setDataSource,
-  dataDestaination,
-  setDataDestaination,
-}) => {
-  const getClientSource = (client) => {
-    setDataSource({ ...dataSource, client });
-  };
-  const getCompteSource = (compte) => {
-    if (compte) {
-      setDataSource({ ...dataSource, compte });
-    }
-  };
+const ModalTransfer = ({ visible, setVisible, step, setStep }) => {
 
-  const getClientDestaination = (client) => {
-    setDataDestaination({ ...dataDestaination, client });
-  };
-  const getCompteDestaination = (compte) => {
-    if (compte) {
-      setDataDestaination({ ...dataDestaination, compte });
-    }
-  };
+  const { dataSource, dataDestination, transferInfo } = useSelector(
+    (state) => state["transferReducer"]
+  );
 
   const closeModal = () => {
     setVisible(false);
     setStep(0);
-    console.log("closeModal", dataSource, dataDestaination);
   };
 
   return (
-    <CModal fullscreen visible={visible} onClose={() => setVisible(false)}>
-      <CModalHeader
-        closeButton={false}
-        style={{ display: "block", padding: "0" }}
-      >
-        <Stepper
-          steps={[
-            { label: "Source" },
-            { label: "Destainataire" },
-            { label: "confirmation" },
-          ]}
-          activeStep={step}
-        />
-      </CModalHeader>
-      <CModalBody>
-        {step === 0 && (
-          <Step0
-            setClientSource={(e) => getClientSource(e)}
-            setCompteSourceHandler={(e) => getCompteSource(e)}
+    <>
+      <CModal fullscreen visible={visible} onClose={() => setVisible(false)}>
+        <CModalHeader
+          closeButton={false}
+          style={{ display: "block", padding: "0" }}
+        >
+          <Stepper
+            steps={[
+              { label: "Source" },
+              { label: "Destainataire" },
+              { label: "confirmation" },
+            ]}
+            activeStep={step}
           />
-        )}
-        {step === 1 && (
-          <Step1
-            setClientDestaination={(e) => getClientDestaination(e)}
-            setCompteDestainationHandler={(e) => getCompteDestaination(e)}
-          />
-        )}
-        {step === 2 && (
-          <Step2
-            setStep={setStep}
-            dataSource={dataSource}
-            dataDestaination={dataDestaination}
-          />
-        )}
-      </CModalBody>
-      <CModalFooter style={{ justifyContent: "space-between" }}>
-        <div>
-          <CButton color="secondary" onClick={() => closeModal()}>
-            Close
-          </CButton>
-        </div>
-        <div>
-          <NextStepFooter
-            dataSource={dataSource}
-            dataDestaination={dataDestaination}
-            step={step}
-            setStep={setStep}
-          />
-        </div>
-      </CModalFooter>
-    </CModal>
+        </CModalHeader>
+        <CModalBody>
+          {step === 0 && <Step0 step={step} setStep={setStep} />}
+          {step === 1 && <Step1 step={step} setStep={setStep} />}
+          {step === 2 && (
+            <Step2
+              setStep={setStep}
+              dataSource={dataSource}
+              dataDestination={dataDestination}
+              transferInfo={transferInfo}
+            />
+          )}
+        </CModalBody>
+        <CModalFooter>
+          <div>
+            <CButton color="secondary" onClick={() => closeModal()}>
+              Close
+            </CButton>
+          </div>
+          <div>
+            <NextStepFooter
+              step={step}
+              setStep={setStep}
+              dataSource={dataSource}
+              dataDestination={dataDestination}
+              transferInfo={transferInfo}
+            />
+          </div>
+        </CModalFooter>
+      </CModal>
+    </>
   );
 };
 

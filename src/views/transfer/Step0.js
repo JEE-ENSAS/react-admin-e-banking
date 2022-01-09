@@ -2,30 +2,20 @@ import React, { useState } from "react";
 import UserList from "../users/UserList";
 import ModalComptes from "./ModalComptes";
 
-const Step0 = ({ setClientSource, setCompteSourceHandler }) => {
-    const [visible, setVisible] = useState(false);
-  
-    const setSelectedCompteHandler = (compte) => {
-      setCompteSourceHandler(compte);
-    };
-  
-    const clientSource = (item) => {
-      if (item) {
-        setVisible(true);
-        setClientSource(item);
-      }
-    };
-  
-    return (
-      <>
-        <UserList from={"modal"} clientSource={clientSource} />
-        <ModalComptes
-          visible={visible}
-          setVisible={setVisible}
-          setSelectedCompteHandler={(e) => setSelectedCompteHandler(e)}
-        />
-      </>
-    );
-  };
+const Step0 = ({ step, setStep }) => {
+  const [modalCompteVisible, setModalCompteVisible] = useState(false);
+
+  return (
+    <>
+      <UserList from={"modal"} step={step} setStep={setStep} />
+      <ModalComptes
+        visible={modalCompteVisible}
+        setVisible={setModalCompteVisible}
+        step={step}
+        setStep={setStep}
+      />
+    </>
+  );
+};
 
 export default Step0;
