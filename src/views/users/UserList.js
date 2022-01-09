@@ -1,25 +1,42 @@
 import React, { useState } from "react";
 import { CSmartTable } from "@coreui/react-pro";
 import { useDispatch, useSelector } from "react-redux";
-import { CFormCheck } from "@coreui/react";
+import {
+  CButton,
+  CFormCheck,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+} from "@coreui/react";
 import { SET_DATA_DESTINATAIRE, SET_DATA_SOURCE } from "src/actions/types";
 import ModalComptes from "../transfer/ModalComptes";
-import ModalTransfer from "../transfer/ModalTransfer";
+import { Stepper } from "react-form-stepper";
+import Step0 from "../transfer/Step0";
+import Step1 from "../transfer/Step1";
+import Step2 from "../transfer/Step2";
+import NextStepFooter from "../transfer/NextStepFooter";
 
 function UserList({ from, step, setStep }) {
   const userState = useSelector((state) => state["userReducer"]);
 
   const [modalCompteVisible, setModalCompteVisible] = useState(false);
+  const [modalStep, setModalStep] = useState(1);
 
   const [users, setUsers] = useState([...userState.users]);
-  const [visibleFullScreen, setVisibleFullScreen] = useState(false);
+  const [visibleFullScreenUsers, setVisibleFullScreenUsers] = useState(false);
 
   const dispatch = useDispatch(null);
 
   const getClickedClient = (client) => {
-    if (typeof step !== "undefined") {
+    if (step === undefined || step === 0) {
       dispatch({
-        type: step === 0 ? SET_DATA_SOURCE : SET_DATA_DESTINATAIRE,
+        type: SET_DATA_SOURCE,
+        payload: { client },
+      });
+    } else {
+      dispatch({
+        type: SET_DATA_DESTINATAIRE,
         payload: { client },
       });
     }
@@ -33,11 +50,10 @@ function UserList({ from, step, setStep }) {
     setModalCompteVisible(true);
   };
 
-
   const handelFullModal = (value) => {
-    console.log("handelFullModal", value);
-    // setVisibleFullScreen(true);
-  }
+    setModalStep(1);
+    setVisibleFullScreenUsers(value); 
+  };
 
   return (
     <>
@@ -70,14 +86,66 @@ function UserList({ from, step, setStep }) {
         setVisible={setModalCompteVisible}
         handelFullModal={handelFullModal}
       />
-      <ModalTransfer
-        visible={visibleFullScreen}
-        setVisible={setVisibleFullScreen}
-        step={step}
-        setStep={setStep}
+      <ModalTransferFromUser
+        visible={visibleFullScreenUsers}
+        setVisible={setVisibleFullScreenUsers}
+        step={modalStep}
+        setStep={setModalStep}
       />
     </>
   );
 }
 
 export default UserList;
+
+const ModalTransferFromUser = ({ visible, setVisible, step, setStep }) => {
+  const { dataSource, dataDestination, transferInfo } = useSelector(
+    (state) => state["transferReducer"]
+  );
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+  return (
+    <>
+      <CModal fullscreen visible={visible} onClose={() => setVisible(false)}>
+        <CModalHeader
+          closeButton={false}
+          style={{ display: "block", padding: "0" }}
+        >
+          <Stepper
+            steps={[
+              { label: "Source" },
+              { label: "Destainataire" },
+              { label: "confirmation" },
+            ]}
+            activeStep={step}
+          />
+        </CModalHeader>
+        <CModalBody>
+          {step === 0 && <Step0 step={step} setStep={setStep} />}
+          {step === 1 && <Step1 step={step} setStep={setStep} />}
+          {step === 2 && (
+            <Step2
+              setStep={setStep}
+              dataSource={dataSource}
+              dataDestination={dataDestination}
+              transferInfo={transferInfo}
+            />
+          )}
+        </CModalBody>
+        <CModalFooter>
+          <div>
+            <CButton color="secondary" onClick={() => closeModal()}>
+              Close
+            </CButton>
+          </div>
+          <div>
+            <NextStepFooter step={step} setStep={setStep} />
+          </div>
+        </CModalFooter>
+      </CModal>
+    </>
+  );
+};

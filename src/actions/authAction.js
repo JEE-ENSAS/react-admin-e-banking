@@ -21,8 +21,7 @@ export const loginAction = (loginForm) => async (dispatch) => {
       dispatch({
         type: AUTH_LOGIN,
         payload: { user, token: data.accessToken },
-      });
-      console.log('data', data)
+      }); 
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       showSuccessSwal({ title: `you're log in ` })

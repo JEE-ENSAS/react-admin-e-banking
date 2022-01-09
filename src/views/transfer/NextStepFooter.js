@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { CButton } from "@coreui/react";
 import { useSelector } from "react-redux";
 
 const NextStepFooter = ({ step, setStep }) => {
-
   const { dataSource, dataDestination, transferInfo } = useSelector(
     (state) => state["transferReducer"]
   );
-
 
   const transferHandler = () => {
     console.log(dataSource, dataDestination, transferInfo);
     // call an API
   };
 
+
   if (step === 0) {
     return (
       <CButton
         disabled={!dataSource.compte}
         color="warning"
-        onClick={() => setStep(step + 1)}
+        onClick={() => setStep(1)}
       >
         Suivant
       </CButton>
@@ -30,7 +29,7 @@ const NextStepFooter = ({ step, setStep }) => {
       <CButton
         disabled={!dataDestination.compte}
         color="warning"
-        onClick={() => setStep(step + 1)}
+        onClick={() => setStep(2)}
       >
         Suivant
       </CButton>
@@ -50,6 +49,9 @@ const NextStepFooter = ({ step, setStep }) => {
         Enregistrer
       </CButton>
     );
+  }
+  if (step === undefined) {
+    return <> step undefined </>;
   }
 };
 

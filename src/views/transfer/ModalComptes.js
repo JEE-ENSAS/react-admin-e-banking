@@ -42,15 +42,22 @@ const ModalComptes = ({ from, visible, setVisible, step, handelFullModal }) => {
   const saveCompteSelected = () => {
     const compte = comptes.find((item) => item.checked === true);
     if (compte) {
-      if (from === "modal") {
+      if (step === undefined || step === 0) {
         dispatch({
-          type: step === 0 ? SET_DATA_SOURCE : SET_DATA_DESTINATAIRE,
+          type: SET_DATA_SOURCE,
+          payload: { compte },
+        });
+      } else {
+        dispatch({
+          type: SET_DATA_DESTINATAIRE,
           payload: { compte },
         });
       }
 
       setVisible(false);
-      handelFullModal(true);
+      if (from !== "modal") {
+        handelFullModal(true);
+      }
     }
   };
 

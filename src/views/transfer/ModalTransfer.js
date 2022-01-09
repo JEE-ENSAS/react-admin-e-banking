@@ -13,8 +13,7 @@ import Step2 from "./Step2";
 import NextStepFooter from "./NextStepFooter";
 import { useSelector } from "react-redux";
 
-const ModalTransfer = ({ visible, setVisible, step, setStep }) => {
-
+const ModalTransfer = ({ visible, setVisible, step, setStep  }) => {
   const { dataSource, dataDestination, transferInfo } = useSelector(
     (state) => state["transferReducer"]
   );
@@ -59,13 +58,7 @@ const ModalTransfer = ({ visible, setVisible, step, setStep }) => {
             </CButton>
           </div>
           <div>
-            <NextStepFooter
-              step={step}
-              setStep={setStep}
-              dataSource={dataSource}
-              dataDestination={dataDestination}
-              transferInfo={transferInfo}
-            />
+            <NextStepFooter step={step} setStep={setStep} />
           </div>
         </CModalFooter>
       </CModal>

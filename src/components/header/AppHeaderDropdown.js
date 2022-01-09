@@ -11,8 +11,7 @@ const AppHeaderDropdown = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const logout = () => {
-    console.log('logout')
+  const logout = () => { 
     localStorage.removeItem('user')
     localStorage.removeItem('token')
     dispatch(logOutAction())
