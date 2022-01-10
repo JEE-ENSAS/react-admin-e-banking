@@ -3,7 +3,12 @@ import { SET_DATA_DESTINATAIRE, SET_DATA_SOURCE, SET_TRANSFERT_INFO } from "src/
 let initialState = {
   dataSource: { client: null, compte: null },
   dataDestination: { client: null, compte: null },
-  transferInfo: { soustraction: "source", price: 0, motif: "" },
+  transferInfo: {
+    soustraction: "source",
+    price: 0,
+    motif: "",
+    operationType: "",
+  },
 };
 
 const tranferReducer = (state = initialState, action) => {
