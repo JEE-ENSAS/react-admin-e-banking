@@ -101,9 +101,8 @@ const CardPrice = () => {
               dispatchTransferHandler(e.target.value, "soustraction")
             }
           >
-            <option>Soustraction: </option>
             <option value="source"> From Source </option>
-            <option value="destainataire">From Destainataire </option>
+            <option value="destainataire">From Destinataire </option>
             <option value="both"> Both </option>
           </CFormSelect>
         </CInputGroup>

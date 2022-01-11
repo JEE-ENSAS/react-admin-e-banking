@@ -25,8 +25,7 @@ import { SET_TRANSFERT_INFO } from "src/actions/types";
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [step, setStep] = useState(0);
-
+ 
   const { sidebarShow, sidebarUnfoldable } = useSelector(
     (state) => state["userReducer"]
   );

@@ -1,11 +1,19 @@
-import React, { Suspense } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-import { CContainer, CSpinner } from '@coreui/react'
+import React, { Suspense, useEffect } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { CContainer, CSpinner } from "@coreui/react";
 
-import routes from '../routes'
-import PrivateRoute from 'src/helpers/PrivateRoute'
+import routes from "../routes";
+import PrivateRoute from "src/helpers/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { fetchAllUsers } from "src/actions/userActions";
 
 const AppContent = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, []);
+
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
@@ -35,12 +43,11 @@ const AppContent = () => {
             );
           })}
 
-
           <Redirect from="/" to="/dashboard" />
         </Switch>
       </Suspense>
     </CContainer>
-  )
-}
+  );
+};
 
-export default React.memo(AppContent)
+export default React.memo(AppContent);

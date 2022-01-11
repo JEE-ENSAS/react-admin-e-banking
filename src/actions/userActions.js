@@ -9,12 +9,13 @@ export const fetchAllUsers = () => async (dispatch) => {
                 type: ERROR_ACTION,
                 payload: {},
             });
-            return Promise.resolve(error);
+            return Promise.reject(error);
         } else {
             dispatch({
                 type: FETCH_USERS,
                 payload: { users: data },
             });
+         console.log("data", data);   
             return Promise.resolve(data);
         }
     } catch (err) {
