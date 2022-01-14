@@ -8,6 +8,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
+
 const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'))
 const Collapses = React.lazy(() => import('./views/base/collapses/Collapses'))
 const ListGroups = React.lazy(() => import('./views/base/list-groups/ListGroups'))
@@ -58,6 +59,10 @@ const UserForm = React.lazy(() => import('./views/users/UserForm'))
 const CardsList = React.lazy(() => import('./views/cards/CardsList'))
 const CardForm = React.lazy(() => import('./views/cards/CardForm'))
 
+const TransfersList = React.lazy(() => import('./views/transfers/TransferList'))
+
+const AccountsList = React.lazy(() => import('./views/accounts/AccountsList'))
+const AccountForm = React.lazy(() => import('./views/accounts/AccountForm'))
 const Settings = React.lazy(() => import('./views/settings/Settings'))
 
 const routes = [
@@ -68,7 +73,13 @@ const routes = [
   { path: '/users/{id}', name: 'user-details', component: UserForm, },
 
   { path: '/cards', name: 'card-list', component: CardsList, },
-  { path: '/cards/{id}', name: 'card-list', component: CardForm },
+  { path: '/card', name: 'card', component: CardForm },
+
+  { path: '/transfers', name: 'transfer-list', component: TransfersList, },
+
+
+  { path: '/accounts', name: 'accounts-list', component: AccountsList, },
+  { path: '/account', name: 'accounts-list', component: AccountForm, },
 
 
   { path: '/settings', name: 'settings', component: Settings, },
