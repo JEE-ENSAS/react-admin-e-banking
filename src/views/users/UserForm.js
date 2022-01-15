@@ -168,7 +168,7 @@ function UserForm({ visible, setVisible }) {
         </CModalBody>
         <CModalFooter>
           <div>
-            <CButton color="secondary">Close</CButton>
+            <CButton onClick={() => setVisible(false)}  color="secondary">Close</CButton>
           </div>
         </CModalFooter>
       </CModal>
