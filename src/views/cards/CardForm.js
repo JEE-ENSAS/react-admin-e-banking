@@ -1,7 +1,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { getListAccounts } from '../../services/AccountService';
-import {  addCardURL } from '../../services/CardDataService';
+import {  baseURL } from '../../services/CardDataService';
 import Swal from 'sweetalert2';
 import { Plus } from "react-bootstrap-icons";
 function CardForm() {
@@ -23,7 +23,7 @@ function CardForm() {
   }, [])
 
 
-  const baseURL = "https://my-card-service-t.herokuapp.com/Card/create";
+  
 
   const accountId = useRef(null);
   const cardNumber = useRef(null);
@@ -50,13 +50,14 @@ function CardForm() {
     };
     console.log(accountId.current.value);
     try {
-      const res = await fetch(baseURL, {
+      const res =await fetch(baseURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify( postData),
       });
+    
 
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;

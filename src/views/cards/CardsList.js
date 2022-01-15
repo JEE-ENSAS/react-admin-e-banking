@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { CSmartTable } from '@coreui/react-pro'
-import { getList } from '../../services/CardDataService';
+import { getList,enabledCard,disabledCard } from '../../services/CardDataService';
 import Button from "react-bootstrap/Button";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import { Plus } from "react-bootstrap-icons";
 import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
-
+import { getAccount } from '../../services/AccountService';
 
 function CardList() {
+
   const [list, setList] = useState([]);
+  const [accountt, setAccountt] = useState([]);
   const [details, setDetails] = useState([])
+  const Swal = require('sweetalert2')
   useEffect(() => {
     let mounted = true;
     getList()
@@ -22,6 +25,26 @@ function CardList() {
       })
     return () => mounted = false;
   }, [])
+
+
+  ////
+
+  const [Users, fetchUsers] = useState([])
+  
+  const getData = (id) => {
+    fetch('https://my-account-service.herokuapp.com/Account/get?id='+id)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        fetchUsers(res)
+      })
+      return Users.accountNumber;
+  }
+
+
+
+  /////
+
   const columns = [
     {key: 'accountId',},
     {key: 'cardNumber',},
@@ -36,15 +59,21 @@ function CardList() {
       _style: { width: '1%' },
       filter: false,
       sorter: false,
-      _props: { color: 'primary', className: 'fw-semibold' },
+      _props: { color: '', className: 'fw-semibold' },
     },
   ]
+
+  const getAccountt = (id) => {
+    
+     return getAccount(id)
+       
+  }
   const getBadge = (isEnabled) => {
     switch (isEnabled) {
-      case 'true':
+      case true:
         return 'success'
-      case 'false':
-        return 'warning'
+      case false:
+        return 'danger'
       
     }
   }
@@ -57,6 +86,58 @@ function CardList() {
       newDetails = [...details, index]
     }
     setDetails(newDetails)
+  }
+  const updateCard = (index) => {
+    
+  }
+  const enableCard = (index) => {
+    Swal.fire({
+      title: 'Do you want to enable this card?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Enable',
+      denyButtonText: `Don't`,
+    }).then((result) => {
+       
+      if (result.isConfirmed) {
+        enabledCard(index);
+       
+      } else if (result.isDenied) {
+        Swal.fire('This card is disabled', '', 'info')
+      }
+    })
+  }
+  const disableCard = (index) => {
+    Swal.fire({
+      title: 'Do you want to disable this card?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Enable',
+      denyButtonText: `Don't`,
+    }).then((result) => {
+       
+      if (result.isConfirmed) {
+        disabledCard(index);
+       
+      } else if (result.isDenied) {
+        Swal.fire('This card is enabled', '', 'info')
+      }
+    })
+  }
+  const deleteCard = (index) => {
+    Swal.fire({
+      title: 'Do you want to delete this card?',
+      
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+       
+    }).then((result) => {
+       
+      if (result.isConfirmed) {
+        enabledCard(index);
+       
+      }  
+    })
   }
   return (
     <div>
@@ -82,11 +163,20 @@ function CardList() {
     itemsPerPage={5}
     pagination
     scopedColumns={{
-      status: (item) => (
-        <td>
-          <CBadge color={getBadge(item.isEnabled)}>{item.id}</CBadge>
-        </td>
+      isEnabled: (item) => (
+        
+         
+          <td><CBadge bg="danger"> </CBadge>{item.isEnabled ? 'Active' : 'Not Active'}  </td>
+        //    <td><CBadge bg="danger">Success</CBadge></td>
+        
       ),
+      accountId: (item) => (
+        
+         
+        <td> { item.accountId}</td>
+      
+      
+    ),
       show_details: (item) => {
         return (
           <td className="py-2">
@@ -110,16 +200,24 @@ function CardList() {
             <CCardBody>
               <h5>{item.cardHolderName}</h5>
               <p className="text-muted">Use since: {item.dateExpiration}</p>
-              <CButton size="sm" color="info">
+              <CButton size="sm" color="info"  onClick={() => {
+                updateCard(item.id)
+              }}>
                 Update
               </CButton>{'    '}
-              <CButton size="sm" color="success" className="ml-1">
+              <CButton size="sm" color="success" className="ml-1"  onClick={() => {
+                enableCard(item.id)
+              }}> 
                  Activate
               </CButton>{'    '}
-              <CButton size="sm" color="warning">
+              <CButton size="sm" color="warning"  onClick={() => {
+                disableCard(item.id)
+              }}>
                 Desactivate
               </CButton>{'    '}
-              <CButton size="sm" color="danger" className="ml-1">
+              <CButton size="sm" color="danger" className="ml-1"  onClick={() => {
+                deleteCard(item.id)
+              }}>
                 Delete
               </CButton>
             </CCardBody>
@@ -131,7 +229,7 @@ function CardList() {
     sorterValue={{ column: 'name', state: 'asc' }}
     tableFilter
     tableHeadProps={{
-      color: 'primary',
+      color: ' ',
     }}
     tableProps={{
       striped: true,
