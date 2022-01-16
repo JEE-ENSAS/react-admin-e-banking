@@ -23,3 +23,10 @@ $enable-rtl: true;
 .user-tabs {
   justify-content: center;
 }
+
+table tr th:last-child {
+  input,
+  span {
+    display: none;
+  }
+}

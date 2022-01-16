@@ -52,7 +52,7 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 
 //  E-banking Components & pages
-const UserList = React.lazy(() => import('./views/users/UserList'))
+const Users = React.lazy(() => import('./views/users/Users'))
 const UserForm = React.lazy(() => import('./views/users/UserForm'))
 
 const CardsList = React.lazy(() => import('./views/cards/CardsList'))
@@ -64,7 +64,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard, },
 
-  { path: '/users', name: 'users', component: UserList, exact: true, private: true },
+  { path: '/users', name: 'users', component: Users, exact: true, private: true },
   { path: '/users/{id}', name: 'user-details', component: UserForm, private: true },
 
   { path: '/cards', name: 'cards', component: CardsList, private: true },

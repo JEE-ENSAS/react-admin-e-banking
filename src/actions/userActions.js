@@ -3,7 +3,7 @@ import { ERROR_ACTION, FETCH_USER, FETCH_USERS } from "./types";
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
-        const { data, error } = await UserService.fetchUsers();
+        const { clients, error } = await UserService.fetchUsers();
         if (error) {
             dispatch({
                 type: ERROR_ACTION,
@@ -13,9 +13,9 @@ export const fetchAllUsers = () => async (dispatch) => {
         } else {
             dispatch({
                 type: FETCH_USERS,
-                payload: { users: data },
+                payload: { users: clients },
             });
-            return Promise.resolve(data);
+            return Promise.resolve(clients);
         }
     } catch (err) {
         return Promise.reject(err);

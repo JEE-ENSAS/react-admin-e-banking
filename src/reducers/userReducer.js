@@ -4,7 +4,7 @@ import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS } from "../actions/t
 
 
 const initialState = {
-    users: usersData,
+    users: [],
     user: {},
     sidebarShow: true,
     sidebarUnfoldable: true,

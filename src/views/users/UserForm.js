@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   cilCreditCard,
   cilLockLocked,
@@ -25,16 +27,48 @@ import {
   CRow,
   CTabContent,
   CTabPane,
+  CTooltip,
 } from "@coreui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_SELECTED_ACCOUNT } from "src/actions/types";
+import classNames from "classnames";
+import { fetchCardsByAccountId } from "src/actions/cardActions";
+import EmptyData from "src/helpers/EmptyData";
 
 function UserForm({ visible, setVisible }) {
   const [activeTab, setActiveTab] = useState(1);
   const [editMode, setEditMode] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [accountsByClient, setAccountsByClient] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [cardsByClient, setCardsByClient] = useState([]);
+
+  const userState = useSelector((state) => state["userReducer"]);
+  const accountState = useSelector((state) => state["accountReducer"]);
+  const cardState = useSelector((state) => state["cardReducer"]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setAccountsByClient(accountState.accountsByUser);
+    setSelectedClient(userState.user);
+    setCardsByClient(cardState.cardsByUser);
+  }, [accountState, cardState]);
 
   const activeTabHandler = (tabIndex) => {
     setActiveTab(tabIndex);
   };
+
+  const getAccountInfo = (account) => {
+    dispatch({ type: SET_SELECTED_ACCOUNT, payload: { ...account } });
+    dispatch(fetchCardsByAccountId(account.id));
+    setSelectedAccount({ ...account });
+  };
+
+  const enableOrDisableAccount = (account) => {};
+
+  const enableOrDisableCard = (card) => {};
 
   return (
     <>
@@ -159,17 +193,114 @@ function UserForm({ visible, setVisible }) {
           </CNav>
           <CTabContent className="rounded-bottom">
             <CTabPane className="p-3 preview" visible={activeTab === 1}>
-              {"activeTab: " + activeTab}
+              <CContainer>
+                <CRow>
+                  <CCol md={8} lg={6} xl={6}>
+                    {accountsByClient.length > 0 ? (
+                      <ul className="list-group">
+                        {accountsByClient.map((account) => (
+                          <li
+                            className={classNames(
+                              "list-group-item d-flex justify-content-between align-items-center  cursor-pointer",
+                              {
+                                active:
+                                  selectedAccount &&
+                                  selectedAccount.id === account.id,
+                              }
+                            )}
+                            key={account.id}
+                            onClick={() => getAccountInfo(account)}
+                          >
+                            {account["accountNumber"]}
+                            <span className="badge badge-success badge-pill">
+                              {account["type"]}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <EmptyData text="there is no account yet" />
+                    )}
+                  </CCol>
+                  {selectedAccount && (
+                    <CCol md={8} lg={6} xl={6}>
+                      <div className="row">
+                        <div className="col-md-11">
+                          <CInputGroup>
+                            <CInputGroupText>$</CInputGroupText>
+                            <CFormInput
+                              disabled={true}
+                              value={selectedAccount.balance}
+                            />
+                          </CInputGroup>
+                        </div>
+                        <div className="col-md-1">
+                          <CTooltip
+                            content={
+                              "click for " +
+                              (selectedAccount.enabled ? "disable" : "enable") +
+                              " this account"
+                            }
+                            placement="top"
+                          >
+                            <CButton
+                              color={
+                                selectedAccount.enabled ? "success" : "danger"
+                              }
+                              shape="rounded-pill"
+                              className="py-3 px-3 cursor-pointer"
+                              onClick={() =>
+                                enableOrDisableAccount(selectedAccount)
+                              }
+                            ></CButton>
+                          </CTooltip>
+                        </div>
+                      </div>
+                      {cardsByClient.length > 0 ? (
+                        <ul className="list-group mt-2">
+                          {cardsByClient.map((card) => (
+                            <CTooltip
+                              content={card.type + "   " + card.dateExpiration}
+                              key={card.id}
+                              placement="top"
+                            >
+                              <li
+                                className={
+                                  "list-group-item d-flex justify-content-between align-items-center"
+                                }
+                              >
+                                {card["cardNumber"]}
+                                <span className="badge badge-success badge-pill">
+                                  <CButton
+                                    color={card.enabled ? "success" : "danger"}
+                                    shape="rounded-pill"
+                                    className="py-3 px-3 cursor-pointer"
+                                    onClick={() => enableOrDisableCard(card)}
+                                  ></CButton>
+                                </span>
+                              </li>
+                            </CTooltip>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="mt-3">
+                          <EmptyData text="No cards available" />
+                        </div>
+                      )}
+                    </CCol>
+                  )}
+                </CRow>
+              </CContainer>
             </CTabPane>
             <CTabPane className="p-3 preview" visible={activeTab === 2}>
               {"activeTab: " + activeTab}
             </CTabPane>
           </CTabContent>
         </CModalBody>
-        <CModalFooter>
-          <div>
-            <CButton onClick={() => setVisible(false)}  color="secondary">Close</CButton>
-          </div>
+        <CModalFooter style={{ padding: "0rem 1rem" }}>
+          <CButton onClick={() => setVisible(false)} color="secondary">
+            Close
+          </CButton>
         </CModalFooter>
       </CModal>
     </>
