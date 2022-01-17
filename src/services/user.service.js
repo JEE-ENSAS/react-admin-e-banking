@@ -35,6 +35,10 @@ class UserService {
     return { data, error };
   };
 
+  updateUser = async (client) => {
+    const { data, error } = await http.put(CLIENT_USER_URL + "/update", client);
+    return { data, error };
+  }
 
 }
 

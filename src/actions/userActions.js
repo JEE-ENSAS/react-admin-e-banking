@@ -1,5 +1,5 @@
 import UserService from "../services/user.service";
-import { ERROR_ACTION, FETCH_USER, FETCH_USERS } from "./types";
+import { ERROR_ACTION, FETCH_USER, FETCH_USERS, UPDATE_USER } from "./types";
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
@@ -7,7 +7,7 @@ export const fetchAllUsers = () => async (dispatch) => {
         if (error) {
             dispatch({
                 type: ERROR_ACTION,
-                payload: {},
+                payload: error.message,
             });
             return Promise.reject(error);
         } else {
@@ -29,7 +29,7 @@ export const fetchUser = (userId) => async (dispatch) => {
         if (error) {
             dispatch({
                 type: ERROR_ACTION,
-                payload: {},
+                payload: error.message,
             });
             return Promise.resolve(error);
         } else {
@@ -43,3 +43,26 @@ export const fetchUser = (userId) => async (dispatch) => {
         return Promise.reject(err);
     }
 }
+
+
+export const updateUserAction = (client) => async (dispatch) => {
+    try {
+        const { data, error } = await UserService.updateUser(client);
+        if (error) {
+            dispatch({
+              type: ERROR_ACTION,
+              payload: error.message,
+            });
+            return Promise.resolve(error);
+        } else {
+            dispatch({
+              type: UPDATE_USER,
+              payload: { user: data },
+            });
+            return Promise.resolve(data);
+        }
+    } catch (err) {
+        return Promise.reject(err);
+    }
+}
+

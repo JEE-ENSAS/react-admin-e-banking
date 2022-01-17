@@ -1,5 +1,5 @@
 import { usersData } from "src/mock-data/users";
-import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS } from "../actions/types";
+import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS, UPDATE_USER } from "../actions/types";
 
 
 
@@ -14,35 +14,41 @@ function userReducer(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case FETCH_USERS:
-            return {
-                ...state,
-                users: payload['users'],
-            };
+      case FETCH_USERS:
+        return {
+          ...state,
+          users: payload["users"],
+        };
 
-        case FETCH_USER:
-            return {
-                ...state,
-                user: payload['user'],
-            }
+      case FETCH_USER:
+        return {
+          ...state,
+          user: payload["user"],
+        };
 
-        case ENABLE_USER:
-            return {
-                ...state,
-                user: payload['user'],
-            };
+      case UPDATE_USER:
+        return {
+          ...state,
+          user: payload["user"],
+        };
 
-        case DISABLE_USER:
-            return {
-                ...state,
-                user: payload['user'],
-            };
+      case ENABLE_USER:
+        return {
+          ...state,
+          user: payload["user"],
+        };
 
-        case 'set':
-            return { ...state, sidebarShow: !payload, sidebarUnfoldable: false };
+      case DISABLE_USER:
+        return {
+          ...state,
+          user: payload["user"],
+        };
 
-        default:
-            return state;
+      case "set":
+        return { ...state, sidebarShow: !payload, sidebarUnfoldable: false };
+
+      default:
+        return state;
     }
 }
 

@@ -17,7 +17,13 @@ const accountReducer = (state = initialState, action) => {
       return { ...state, accountsByUser: payload };
 
     case SET_SELECTED_ACCOUNT:
-      return { ...state, account: payload };
+      return {
+        ...state,
+        account: payload,
+        accountsByUser: state.accountsByUser.map((account) =>
+          account.id === payload.id ? { ...payload } : account
+        ),
+      };
 
     default:
       return { ...state };
