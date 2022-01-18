@@ -18,6 +18,7 @@ import { fetchAccountByUser } from "src/actions/accountAction";
 
 function UserList({ from, step, setStep }) {
   const userState = useSelector((state) => state["userReducer"]);
+  const transferState = useSelector((state) => state["transferReducer"]);
 
   const [modalCompteVisible, setModalCompteVisible] = useState(false);
   const [modalStep, setModalStep] = useState(1);
@@ -44,10 +45,17 @@ function UserList({ from, step, setStep }) {
         },
       ];
     });
+    if (step === 1) {
+      const { dataSource } = transferState;
+      if (dataSource && dataSource.client && dataSource.client["id"]) {
+        clients = clients.filter((item) => item.id !== dataSource.client.id);
+      }
+    }
     setUsers([...clients]);
   }, []);
 
   const getClickedClient = (client) => {
+    dispatch(fetchAccountByUser(client.id));
     if (step === undefined || step === 0) {
       dispatch({
         type: SET_DATA_SOURCE,

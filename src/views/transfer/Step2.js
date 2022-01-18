@@ -49,13 +49,16 @@ const Step2 = ({ dataSource, dataDestination, setStep  }) => {
 export default Step2;
 
 const CardConfirmation = ({ data, header, setStep }) => {
+  const {client ,  compte} = data
   return (
     <>
-      {data && data.client && data.compte && (
+      {data && client && compte && (
         <CCard className="text-center">
           <CCardHeader> {header} </CCardHeader>
           <CCardBody>
-            <CCardTitle>{data.client.name}</CCardTitle>
+            <CCardTitle>
+              {client.firstname + " - " + client.lastname + " - " + client.cin}
+            </CCardTitle>
             <CCardText className="py-5">
               With supporting text below as a natural lead-in to additional
               content.
@@ -68,7 +71,7 @@ const CardConfirmation = ({ data, header, setStep }) => {
           </CCardBody>
 
           <CCardFooter className="text-medium-emphasis">
-            {data.compte.label}
+            {compte.accountNumber}
           </CCardFooter>
         </CCard>
       )}
