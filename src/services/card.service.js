@@ -15,6 +15,15 @@ class CardService {
     });
     return { data, error };
   };
-}
 
+  acceptCard = async (cardId) => {
+    const { data, error } = await http.put(`${CARD_URL}accept/${cardId}`, {});
+    return { data, error };
+  };
+
+  getCardsNoAccepted = async () => {
+    const { data, error } = await http.get(`${CARD_URL}getNotAcceptable`);
+    return { data, error };
+  };
+}
 export default new CardService();

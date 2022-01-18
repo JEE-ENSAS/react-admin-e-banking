@@ -24,9 +24,12 @@ $enable-rtl: true;
   justify-content: center;
 }
 
-table tr th:last-child {
-  input,
-  span {
-    display: none;
+.card-list,
+.user-list {
+  table tr th:last-child {
+    input,
+    span {
+      display: none;
+    }
   }
 }

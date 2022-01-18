@@ -83,45 +83,47 @@ function UserList({ from, step, setStep }) {
   };
   return (
     <>
-      <CSmartTable
-        items={users}
-        columnFilter
-        columnSorter
-        pagination
-        tableProps={{
-          hover: true,
-        }}
-        clickableRows
-        scopedColumns={{
-          actions: (client) => (
-            <td
-              className={classNames("td-actions", {
-                "d-flex justify-content-around align-items-center": !from,
-                "text-center": from,
-              })}
-            >
-              <CButton
-                size="sm"
-                color="outline-success"
-                className="mx-1"
-                onClick={() => getClickedClient(client)}
+      <div className="user-list">
+        <CSmartTable
+          items={users}
+          columnFilter
+          columnSorter
+          pagination
+          tableProps={{
+            hover: true,
+          }}
+          clickableRows
+          scopedColumns={{
+            actions: (client) => (
+              <td
+                className={classNames("td-actions", {
+                  "d-flex justify-content-around align-items-center": !from,
+                  "text-center": from,
+                })}
               >
-                <CIcon icon={cilTransfer} />
-              </CButton>
-
-              {!from && (
                 <CButton
                   size="sm"
                   color="outline-success"
-                  onClick={() => displayClientInfo(client)}
+                  className="mx-1"
+                  onClick={() => getClickedClient(client)}
                 >
-                  <CIcon icon={cilUser} />
+                  <CIcon icon={cilTransfer} />
                 </CButton>
-              )}
-            </td>
-          ),
-        }}
-      />
+
+                {!from && (
+                  <CButton
+                    size="sm"
+                    color="outline-success"
+                    onClick={() => displayClientInfo(client)}
+                  >
+                    <CIcon icon={cilUser} />
+                  </CButton>
+                )}
+              </td>
+            ),
+          }}
+        />
+      </div>
       {modalCompteVisible && (
         <ModalComptes
           from={from ? from : "userList"}

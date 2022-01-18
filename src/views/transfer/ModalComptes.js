@@ -1,7 +1,6 @@
 import {
   CBadge,
   CButton,
-  CFormCheck,
   CListGroup,
   CListGroupItem,
   CModal,

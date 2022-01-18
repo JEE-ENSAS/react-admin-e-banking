@@ -1,13 +1,10 @@
-import { usersData } from "src/mock-data/users";
 import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS, UPDATE_USER } from "../actions/types";
 
-
-
 const initialState = {
-    users: [],
-    user: {},
-    sidebarShow: true,
-    sidebarUnfoldable: true,
+  users: [],
+  user: {},
+  sidebarShow: true,
+  sidebarUnfoldable: true,
 };
 
 function userReducer(state = initialState, action) {
