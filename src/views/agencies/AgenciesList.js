@@ -5,6 +5,7 @@ import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
+import { DateTimeFormat } from "src/helpers/DateTimeFormat";
 
 function AgenciesList() {
   const history = useHistory();
@@ -13,7 +14,16 @@ function AgenciesList() {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    getListAccounts().then((items) => setList(items));
+    getListAccounts()
+      .then((items) => {
+        if (items && items.length > 0) {
+          items.forEach((item) => {
+            item.creationDate = DateTimeFormat(item.creationDate);
+            return item;
+          });
+        }
+      })
+      .then((items) => setList(items));
   }, []);
 
   const columns = [
@@ -54,7 +64,6 @@ function AgenciesList() {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        //  deleteAccount(index);
       }
     });
   };
@@ -103,7 +112,7 @@ function AgenciesList() {
               <CCollapse visible={details.includes(item.id)}>
                 <CCardBody>
                   <p className="text-muted">
-                    Creation Date : {item.creationDate}
+                    Creation Date : DateTimeFormat(item.creationDate)
                   </p>
                   <CButton
                     size="sm"

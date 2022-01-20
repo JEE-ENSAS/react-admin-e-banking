@@ -4,11 +4,12 @@ import {
   getListAccounts,
   enabledAccount,
   disabledAccount,
-} from "../../services/AccountService"; 
+} from "../../services/AccountService";
 import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
+import { DateTimeFormat } from "src/helpers/DateTimeFormat";
 
 function AccountsList() {
   const history = useHistory();
@@ -17,7 +18,18 @@ function AccountsList() {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    getListAccounts().then((items) => setList(items));
+    getListAccounts()
+      .then((items) => {
+        if (items && items.length > 0) {
+          items.forEach((item) => {
+            item.creationDate = DateTimeFormat(item.creationDate);
+            return item;
+          });
+        }
+
+        return items;
+      })
+      .then((items) => setList(items));
   }, []);
 
   const columns = [
@@ -90,7 +102,7 @@ function AccountsList() {
   return (
     <>
       <div className="py-0 d-flex justify-content-between align-items-center ">
-        <p>Accounts List</p>
+        <h4>Accounts List</h4>
         <BtnPlus pathname="/account" label="New Account" />
       </div>
       <hr />
@@ -136,7 +148,7 @@ function AccountsList() {
               <CCollapse visible={details.includes(item.id)}>
                 <CCardBody>
                   <p className="text-muted">
-                    Creation Date : {item.creationDate}
+                    Creation Date :{DateTimeFormat(item.creationDate)}
                   </p>
                   <CButton
                     size="sm"
