@@ -3,7 +3,7 @@ import { getParameter } from "../../services/SettingsService";
  import CIcon from "@coreui/icons-react";
 import { cilSettings } from "@coreui/icons";
 import { CCol, CRow } from "@coreui/react";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"; 
 
 function Setting() {
   const baseURL =
