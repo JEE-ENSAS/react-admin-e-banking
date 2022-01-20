@@ -9,7 +9,6 @@ const NextStepFooter = ({ step, setStep }) => {
 
   const transferHandler = () => {
     console.log(dataSource, dataDestination, transferInfo);
-    // call an API
   };
 
 

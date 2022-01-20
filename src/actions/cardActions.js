@@ -44,8 +44,7 @@ export const fetchCardsNotAccepted = () => async (dispatch) => {
       });
       return Promise.resolve(data);
     }
-  } catch (err) {
-    console.log("err", err);
+  } catch (err) { 
     return Promise.reject(err);
   }
 };
