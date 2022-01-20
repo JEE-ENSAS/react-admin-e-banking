@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { CSmartTable } from '@coreui/react-pro'
-import { getList,enabledCard,disabledCard } from '../../services/CardDataService';
-import Button from "react-bootstrap/Button";
-import { Plus } from "react-bootstrap-icons";
-import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
-import { useHistory  } from "react-router-dom";
-import Swal from 'sweetalert2';
+import React, { useEffect, useState } from "react";
+import { CSmartTable } from "@coreui/react-pro";
+import {
+  getList,
+  enabledCard,
+  disabledCard,
+} from "../../services/CardDataService";
+import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import BtnPlus from "../../helpers/BtnPlus";
 
 function CardList() {
   const [list, setList] = useState([]);
@@ -89,29 +92,23 @@ function CardList() {
     });
   };
   return (
-    <div>
-      <div className="d-flex justify-content-end">
-        <a href="/cards#/card">
-          <Button variant="info">
-            <Plus /> New Card
-          </Button>
-        </a>
+    <>
+      <div className="d-flex justify-content-between align-items-center ">
+        <h3>Cards List</h3>
+        <BtnPlus pathname="/card" label="New Card" />
       </div>
-
-      <h3>Cards List</h3>
-      <hr></hr>
       <CSmartTable
-        activePage={3}
-        cleaner
-        clickableRows
         columns={columns}
+        items={list}
+        itemsPerPage={7}
         columnFilter
         columnSorter
-        footer
-        items={list}
-        itemsPerPageSelect
-        itemsPerPage={5}
         pagination
+        clickableRows
+        tableProps={{
+          striped: true,
+          hover: true,
+        }}
         scopedColumns={{
           isEnabled: (item) => (
             <td>
@@ -192,20 +189,9 @@ function CardList() {
             );
           },
         }}
-        selectable
-        sorterValue={{ column: "name", state: "asc" }}
-        tableFilter
-        tableHeadProps={{
-          color: "",
-        }}
-        tableProps={{
-          striped: true,
-          hover: true,
-        }}
       />
-    </div>
+    </>
   );
 }
 
 export default CardList;
- 

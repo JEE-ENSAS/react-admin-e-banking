@@ -89,10 +89,11 @@ function UserList({ from, step, setStep }) {
           columnFilter
           columnSorter
           pagination
+          clickableRows
           tableProps={{
+            striped: true,
             hover: true,
           }}
-          clickableRows
           scopedColumns={{
             actions: (client) => (
               <td

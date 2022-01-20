@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getListUsers, baseURL } from "../../services/AccountService";
-import { Plus } from "react-bootstrap-icons";
-import Swal from "sweetalert2";
+ import Swal from "sweetalert2";
 
 function AgencyForm() {
   const accountNumber = useRef(null);
@@ -48,8 +47,9 @@ function AgencyForm() {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <Plus /> Add New Agency
+      <div className="card-header text-center">
+        <i className="fa fa-plus mx-1"></i>
+        Add New Agency
       </div>
       <div className="card-body">
         <div className="form-group">

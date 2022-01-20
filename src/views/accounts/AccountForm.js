@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getListUsers, baseURL } from "../../services/AccountService";
-import { Plus } from "react-bootstrap-icons";
- 
+  
 function AccountForm() {
   const Swal = require("sweetalert2");
 
@@ -50,9 +49,7 @@ function AccountForm() {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <Plus /> Add New Account
-      </div>
+      <div className="card-header text-center">Add New Account</div>
       <div className="card-body">
         <div className="form-group">
           <label>Select User : </label>

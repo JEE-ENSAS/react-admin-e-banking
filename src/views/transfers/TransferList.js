@@ -19,15 +19,15 @@ function CardList() {
   return (
     <div>
       <h3> Transfers List</h3>
-      <hr></hr>
+      <hr />
       <CSmartTable
         columns={columns}
+        items={list}
+        itemsPerPage={8}
         columnFilter
         columnSorter
         footer
-        items={list}
         itemsPerPageSelect
-        itemsPerPage={5}
         pagination
         clickableRows
       />

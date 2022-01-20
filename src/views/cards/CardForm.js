@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { getListAccounts } from "../../services/AccountService";
 import { baseURL } from "../../services/CardDataService";
 import Swal from "sweetalert2";
-import { Plus } from "react-bootstrap-icons";
 function CardForm() {
   const [list, setList] = useState([]);
 
@@ -49,8 +48,9 @@ function CardForm() {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <Plus /> Add New Card
+      <div className="card-header text-center">
+        <i className="fa fa-plus mx-1"></i>
+        Add New Card
       </div>
       <div className="card-body">
         <div className="form-group">

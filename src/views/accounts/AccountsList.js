@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { CSmartTable } from '@coreui/react-pro'
-import { getListAccounts,enabledAccount,disabledAccount } from '../../services/AccountService';
-import Button from "react-bootstrap/Button";
-import { Plus } from "react-bootstrap-icons";
-import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
-import { useHistory  } from "react-router-dom";
-import Swal from 'sweetalert2';
+import React, { useEffect, useState } from "react";
+import { CSmartTable } from "@coreui/react-pro";
+import {
+  getListAccounts,
+  enabledAccount,
+  disabledAccount,
+} from "../../services/AccountService"; 
+import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import BtnPlus from "src/helpers/BtnPlus";
 
 function AccountsList() {
   const history = useHistory();
@@ -85,29 +88,24 @@ function AccountsList() {
     }).then((result) => {});
   };
   return (
-    <div>
-      <div className="d-flex justify-content-end">
-        <a href="/cards#/account">
-          <Button>
-            <Plus /> New Account
-          </Button>
-        </a>
+    <>
+      <div className="py-0 d-flex justify-content-between align-items-center ">
+        <p>Accounts List</p>
+        <BtnPlus pathname="/account" label="New Account" />
       </div>
-
-      <h3> Accounts List</h3>
-      <hr></hr>
+      <hr />
       <CSmartTable
-        activePage={3}
-        cleaner
-        clickableRows
+        items={list}
         columns={columns}
+        itemsPerPage={7}
         columnFilter
         columnSorter
-        footer
-        items={list}
-        itemsPerPageSelect
-        itemsPerPage={5}
         pagination
+        clickableRows
+        tableProps={{
+          striped: true,
+          hover: true,
+        }}
         scopedColumns={{
           status: (item) => (
             <td>
@@ -189,20 +187,9 @@ function AccountsList() {
             );
           },
         }}
-        selectable
-        sorterValue={{ column: "name", state: "asc" }}
-        tableFilter
-        tableHeadProps={{
-          color: " ",
-        }}
-        tableProps={{
-          striped: true,
-          hover: true,
-        }}
       />
-    </div>
+    </>
   );
 }
 
 export default AccountsList;
- 

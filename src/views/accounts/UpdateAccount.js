@@ -4,7 +4,6 @@ import {
   getAccount,
   updateURL,
 } from "../../services/AccountService";
-import { Pen } from "react-bootstrap-icons";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -61,8 +60,9 @@ function UpdateAccount() {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <Pen /> Update Account
+      <div className="card-header text-center ">
+        <i className="fa fa-pencil mx-1"></i>
+        Update Account
       </div>
       <div className="card-body">
         <div className="form-group">
