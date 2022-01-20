@@ -6,7 +6,7 @@ import { Plus } from "react-bootstrap-icons";
 import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
 import { useHistory  } from "react-router-dom";
 
-function AccountsList() {
+function AgenciesList() {
 
   const Swal = require('sweetalert2')
 
@@ -61,40 +61,10 @@ function AccountsList() {
     setDetails(newDetails)
   }
   
-  const enableAccount = (index) => {
-    Swal.fire({
-      title: 'Do you want to enable this account?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Enable',
-      denyButtonText: `Don't`,
-    }).then((result) => {
-       
-      if (result.isConfirmed) {
-      //  enabledAccount(index);
-      enabledAccount(index);
-      } else if (result.isDenied) {
-        Swal.fire('This account is disabled', '', 'info')
-      }
-    })
-  }
-  const disableAccount = (index) => {
-    Swal.fire({
-      title: 'Do you want to disable this account?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Disable',
-      denyButtonText: `Don't`,
-    }).then((result) => {
-       
-      if (result.isConfirmed) {
+ 
+
+   
      
-     disabledAccount(index);
-      } else if (result.isDenied) {
-        Swal.fire('This account is enabled', '', 'info')
-      }
-    })
-  }
   const deleteAccount = (index) => {
     Swal.fire({
       title: 'Do you want to delete this account?',
@@ -114,12 +84,12 @@ function AccountsList() {
     <div>
         <div className="d-flex justify-content-end">
            <a href="/cards#/account" >
-           <Button> <Plus /> New Account </Button>
+           <Button> <Plus /> New Agency </Button>
             </a>
         </div>
 
      
-        <h3> Accounts List</h3>
+        <h3> Agencies List</h3>
       <hr></hr>
         <CSmartTable
            activePage={3}
@@ -176,16 +146,7 @@ function AccountsList() {
               }}>
                        Update
                      </CButton>{'    '}
-                     <CButton size="sm" color="success" className="ml-1"  onClick={() => {
-                       enableAccount(item.id)
-                     }}> 
-                        Activate
-                     </CButton>{'    '}
-                     <CButton size="sm" color="warning"  onClick={() => {
-                       disableAccount(item.id)
-                     }}>
-                       Desactivate
-                     </CButton>{'    '}
+                      
                      <CButton size="sm" color="danger" className="ml-1"  onClick={() => {
                        deleteAccount(item.id)
                      }}>
@@ -211,5 +172,5 @@ function AccountsList() {
        )
        }
 
-export default AccountsList;
+export default AgenciesList;
  

@@ -8,7 +8,10 @@ export function getList() {
     return fetch('https://my-api-gateway-t.herokuapp.com/Card/getAll')
       .then(data => data.json())
   }
-
+  export function getCard(id) {
+    return fetch('https://my-card-service-t.herokuapp.com/Card/get?id='+id)
+      .then(data => data.json())
+  }
  
 
   export function enabledCard(id) {
@@ -56,6 +59,9 @@ export function getList() {
   };
 
   export const baseURL = "https://my-card-service-t.herokuapp.com/Card/create";
+  export const updateURL = "https://my-card-service-t.herokuapp.com/Card/update";
+
+  
   export default addCardURL;
  
  
