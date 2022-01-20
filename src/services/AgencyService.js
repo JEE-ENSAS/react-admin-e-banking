@@ -1,0 +1,1 @@
+//curl --header "content-type: text/xml" -d @getAgencies.xml https://my-agency-service.herokuapp.com/ws
