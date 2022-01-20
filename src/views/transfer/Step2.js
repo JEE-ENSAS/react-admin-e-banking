@@ -81,7 +81,7 @@ const CardConfirmation = ({ data, header, setStep }) => {
 
 const CardPrice = () => {
   const [transferInfo, setTransferInfo] = useState({
-    soustraction: "source",
+    soustraction: "FROM_ME",
     price: 0,
     motif: '',
   });
@@ -104,9 +104,9 @@ const CardPrice = () => {
               dispatchTransferHandler(e.target.value, "soustraction")
             }
           >
-            <option value="source"> From Source </option>
-            <option value="destainataire">From Destinataire </option>
-            <option value="both"> Both </option>
+            <option value="FROM_ME"> From Source </option>
+            <option value="FROM_OTHER">From Destinataire </option>
+            <option value="FROM_BOTH"> Both </option>
           </CFormSelect>
         </CInputGroup>
       </CCardHeader>
