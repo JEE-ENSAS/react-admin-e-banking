@@ -4,7 +4,7 @@ let initialState = {
   dataSource: { client: null, compte: null },
   dataDestination: { client: null, compte: null },
   transferInfo: {
-    soustraction: "source",
+    soustraction: "FROM_ME",
     price: 0,
     motif: "",
     operationType: "",
