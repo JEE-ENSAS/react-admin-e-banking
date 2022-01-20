@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { CSmartTable } from "@coreui/react-pro";
 import { getListAccounts } from "../../services/AccountService";
-import Button from "react-bootstrap/Button";
-import { Plus } from "react-bootstrap-icons";
 import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import BtnPlus from "src/helpers/BtnPlus";
 
 function AgenciesList() {
   const history = useHistory();
@@ -61,28 +60,19 @@ function AgenciesList() {
   };
   return (
     <div>
-      <div className="d-flex justify-content-end">
-        <a href="/cards#/account">
-          <Button>
-            <Plus /> New Agency
-          </Button>
-        </a>
+      <div className="d-flex justify-content-between align-items-center ">
+        <h4>Agencies List</h4>
+        <BtnPlus pathname="/account" label="New Agency" />
       </div>
-
-      <h3> Agencies List</h3>
-      <hr></hr>
+      <hr />
       <CSmartTable
-        activePage={3}
-        cleaner
-        clickableRows
         columns={columns}
+        items={list}
+        itemsPerPage={7}
         columnFilter
         columnSorter
-        footer
-        items={list}
-        itemsPerPageSelect
-        itemsPerPage={5}
         pagination
+        clickableRows
         scopedColumns={{
           status: (item) => (
             <td>
@@ -143,16 +133,6 @@ function AgenciesList() {
               </CCollapse>
             );
           },
-        }}
-        selectable
-        sorterValue={{ column: "name", state: "asc" }}
-        tableFilter
-        tableHeadProps={{
-          color: "",
-        }}
-        tableProps={{
-          striped: true,
-          hover: true,
         }}
       />
     </div>

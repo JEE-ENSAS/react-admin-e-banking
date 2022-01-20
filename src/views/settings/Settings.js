@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getParameter } from "../../services/SettingsService";
-import { Row, Col } from "react-bootstrap";
-import CIcon from "@coreui/icons-react";
+ import CIcon from "@coreui/icons-react";
 import { cilSettings } from "@coreui/icons";
 import Swal from "sweetalert2";
+import { CCol, CRow } from "@coreui/react";
 
 function Setting() {
   const baseURL =
@@ -66,8 +66,8 @@ function Setting() {
       </div>
       <div className="card-body">
         <b>Max Amount :</b>
-        <Row>
-          <Col>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Cash To Cash :</label>
               <input
@@ -78,8 +78,8 @@ function Setting() {
                 placeholder="maxAmountForCashToCash"
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label>Cash To Account :</label>
               <input
@@ -90,10 +90,10 @@ function Setting() {
                 placeholder="maxAmountForCashToAccount "
               />
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Account To Cash :</label>
               <input
@@ -104,8 +104,8 @@ function Setting() {
                 placeholder="maxAmountForAccountToCash "
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label> Account To Account :</label>
               <input
@@ -116,13 +116,13 @@ function Setting() {
                 placeholder="maxAmountForAccountToAccount "
               />
             </div>
-          </Col>
-        </Row>
+          </CCol>
+        </CRow>
 
         <hr></hr>
         <b>Max Holding Time :</b>
-        <Row>
-          <Col>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Cash To Cash :</label>
               <input
@@ -133,8 +133,8 @@ function Setting() {
                 placeholder="maxHoldingTimeForCashToCash"
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label>Cash To Account :</label>
               <input
@@ -145,10 +145,10 @@ function Setting() {
                 placeholder="maxHoldingTimeForCashToAccount "
               />
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Account To Cash :</label>
               <input
@@ -159,8 +159,8 @@ function Setting() {
                 placeholder="maxHoldingTimeForAccountToCash "
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label> Account To Account :</label>
               <input
@@ -171,13 +171,13 @@ function Setting() {
                 placeholder="maxHoldingTimeForAccountToAccount "
               />
             </div>
-          </Col>
-        </Row>
+          </CCol>
+        </CRow>
 
         <hr></hr>
         <b>Transfer Percentage :</b>
-        <Row>
-          <Col>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Cash To Cash :</label>
               <input
@@ -187,8 +187,8 @@ function Setting() {
                 ref={transferPercentageForCashToCash}
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label>Cash To Account :</label>
               <input
@@ -198,10 +198,10 @@ function Setting() {
                 ref={transferPercentageForCashToAccount}
               />
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol>
             <div className="form-group">
               <label>Account To Cash :</label>
               <input
@@ -211,8 +211,8 @@ function Setting() {
                 ref={transferPercentageForAccountToCash}
               />
             </div>
-          </Col>
-          <Col>
+          </CCol>
+          <CCol>
             <div className="form-group">
               <label> Account To Account :</label>
               <input
@@ -222,8 +222,8 @@ function Setting() {
                 ref={transferPercentageForAccountToAccount}
               />
             </div>
-          </Col>
-        </Row>
+          </CCol>
+        </CRow>
 
         <br></br>
         <div className="form-group">

@@ -2,8 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { getListAccounts } from "../../services/AccountService";
 import { updateURL, getCard } from "../../services/CardDataService";
 import { useLocation } from "react-router-dom";
-import { Pen } from "react-bootstrap-icons";
-import Swal from "sweetalert2";
+ import Swal from "sweetalert2";
 
 function UpdateCard() {
   const [list, setList] = useState([]);
@@ -54,8 +53,8 @@ function UpdateCard() {
 
   return (
     <div className="card">
-      <div className="card-header">
-        <Pen /> Update Card
+      <div className="card-header text-center">
+        <i className="fa fa-pencil mx-1"></i> Update Card
       </div>
       <div className="card-body">
         <div className="form-group">
