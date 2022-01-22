@@ -36,8 +36,7 @@ const AppContent = () => {
               </PrivateRoute>
             );
           })}
-
-          <Redirect from="/" to="/dashboard" />
+          <Redirect from="/" name="dashboard" to="/users" />
         </Switch>
       </Suspense>
     </CContainer>
