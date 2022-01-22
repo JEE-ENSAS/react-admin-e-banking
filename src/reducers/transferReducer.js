@@ -1,4 +1,5 @@
 import {
+  CREATE_TRANSFER,
   FETCH_TRANSFETS,
   SET_DATA_DESTINATAIRE,
   SET_DATA_SOURCE,
@@ -45,6 +46,10 @@ const tranferReducer = (state = initialState, action) => {
 
     case FETCH_TRANSFETS:
       return { ...state, transfers: payload["items"] };
+
+    case CREATE_TRANSFER : 
+     return { ...state, transfers: [...state.transfers, payload["item"]] };
+
 
     default:
       return state;

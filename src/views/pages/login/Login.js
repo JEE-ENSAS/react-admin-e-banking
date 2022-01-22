@@ -23,7 +23,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [loginForm, setLoginForm] = useState({
-    username: "m.iken",
+    username: "admin",
     password: "password",
   });
   const signIn = async (e) => {

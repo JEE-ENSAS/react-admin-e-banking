@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { CContainer, CSpinner } from "@coreui/react";
 import routes from "../routes";
-import PrivateRoute from "src/helpers/PrivateRoute";
+import { PrivateRoute } from "src/helpers/PrivateRoute";
 
 const AppContent = () => {
   return (
