@@ -1,7 +1,25 @@
-import React from 'react'
-import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchCardsNotAccepted } from "src/actions/cardActions";
+import { getListTransfersAction } from "src/actions/transfertActions";
+import { fetchAllUsers } from "src/actions/userActions";
+import {
+  AppContent,
+  AppSidebar,
+  AppFooter,
+  AppHeader,
+} from "../components/index";
 
 const DefaultLayout = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+    dispatch(fetchCardsNotAccepted());
+    dispatch(getListTransfersAction());
+  }, []);
+
   return (
     <div>
       <AppSidebar />
@@ -13,7 +31,7 @@ const DefaultLayout = () => {
         <AppFooter />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DefaultLayout
+export default DefaultLayout;

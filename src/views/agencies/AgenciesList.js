@@ -7,13 +7,10 @@ import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
 import { useHistory  } from "react-router-dom";
 
 function AgenciesList() {
-
-  const Swal = require('sweetalert2')
-
   const history = useHistory();
 
   const [list, setList] = useState([]);
-  const [details, setDetails] = useState([])
+  const [details, setDetails] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -24,55 +21,45 @@ function AgenciesList() {
           
         }
       })
-    return () => mounted = false;
-  }, [])
+      .then((items) => setList(items));
+  }, []);
+
   const columns = [
     {key: 'name',},
     {key: 'location', },
     {key: 'city', }, 
     
     {
-      key: 'show_details',
-      label: '',
-      _style: { width: '1%' },
+      key: "show_details",
+      label: "",
+      _style: { width: "1%" },
       filter: false,
       sorter: false,
-      _props: { color: '', className: 'fw-semibold' },
+      _props: { color: "", className: "fw-semibold" },
     },
-  ]
+  ];
   const getBadge = (isEnabled) => {
-    switch (isEnabled) {
-      case true:
-        return 'success'
-      case false:
-        return 'warning'
-      
-    }
-  }
-  const toggleDetails = (index) => {
-    const position = details.indexOf(index)
-    let newDetails = details.slice()
-    if (position !== -1) {
-      newDetails.splice(position, 1)
-    } else {
-      newDetails = [...details, index]
-    }
-    setDetails(newDetails)
-  }
-  
- 
+    return isEnabled ? "success" : "warning";
+  };
 
-   
-     
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index);
+    let newDetails = details.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...details, index];
+    }
+    setDetails(newDetails);
+  };
+
   const deleteAccount = (index) => {
     Swal.fire({
-      title: 'Do you want to delete this account?',
-      
+      title: "Do you want to delete this account?",
+
       showCancelButton: true,
-      confirmButtonText: 'Delete',
-       
+      confirmButtonText: "Delete",
     }).then((result) => {
-       
       if (result.isConfirmed) {
       //  deleteAccount(index);
        
@@ -173,4 +160,3 @@ function AgenciesList() {
        }
 
 export default AgenciesList;
- 

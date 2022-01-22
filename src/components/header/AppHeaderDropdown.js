@@ -1,30 +1,24 @@
 import React from 'react'
-import {
-  CAvatar,
-  CBadge,
-  CDropdown,
-  CDropdownDivider,
-  CDropdownHeader,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-} from '@coreui/react'
-import {
-  cilBell,
-  cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
-  cilFile,
-  cilLockLocked,
-  cilSettings,
-  cilTask,
-  cilUser,
-} from '@coreui/icons'
+import { CAvatar, CBadge, CDropdown, CDropdownDivider, CDropdownHeader, CDropdownItem, CDropdownMenu, CDropdownToggle } from '@coreui/react'
+import { cilBell, cilCreditCard, cilCommentSquare, cilEnvelopeOpen, cilFile, cilLockLocked, cilSettings, cilTask, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
 import avatar8 from './../../assets/images/avatars/8.jpg'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { logOutAction } from 'src/actions/authAction'
 
 const AppHeaderDropdown = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const logout = () => { 
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    dispatch(logOutAction())
+    history.push('/login')
+  }
+
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -84,9 +78,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={() => logout()} style={{ cursor: 'pointer' }}  >
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Log out
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

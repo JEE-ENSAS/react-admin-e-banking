@@ -15,3 +15,23 @@ $enable-rtl: true;
 
 // If you want to add custom CSS you can put it here.
 @import "custom";
+
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.user-tabs {
+  justify-content: center;
+}
+
+.card-list,
+.user-list {
+  table tr th:last-child {
+    input,
+    span {
+      display: none;
+    }
+  }
+}
