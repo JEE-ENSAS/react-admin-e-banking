@@ -1,9 +1,10 @@
 
 import React, { useRef, useState, useEffect } from "react";
-import { getListUsers , baseURL} from '../../services/AccountService';
+import { getListUsers } from '../../services/AccountService';
+import { addURL  } from '../../services/AgencyService';
 import { Plus } from "react-bootstrap-icons";
 import { Redirect } from "react-router-dom";
- 
+import axios  from "../../http-common";
 
 function AgencyForm() {
 
@@ -11,11 +12,11 @@ function AgencyForm() {
 
 
 
-  const accountNumber = useRef(null);
-  const balance = useRef(null);
-  const currency = useRef(null);
-  const userId = useRef(null);
-  const type = useRef(null);
+  const name = useRef(null);
+  const location = useRef(null);
+  const city = useRef(null);
+  const idAgent = useRef(null);
+   
    
  
  
@@ -36,24 +37,20 @@ function AgencyForm() {
 
 
   const [setPostResult] = useState(null);
-
-  
   async function postData() {
     console.log("post data");
     
    postData = {
-           
-            "accountNumber": accountNumber.current.value,
-            "balance": balance.current.value,
-            "creationDate": new Date(),
-            "currency": currency.current.value,
-            "type": type.current.value,
-            "userId": userId.current.value
+
+            "name": name.current.value,
+            "location": location.current.value,
+            "city": city.current.value,
+            "idAgent": idAgent.current.value
       
     };
   
     try {
-      const res = await fetch(baseURL, {
+      const res = await fetch(addURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -88,31 +85,33 @@ function AgencyForm() {
   }
   
 
+  
+
   return (
     <div className="card">
       <div className="card-header"  > <Plus />  Add New Agency</div>
       <div className="card-body">
       <div className="form-group">
           <label>Select Agent : </label>
-        <select className="form-control">
+          <select className="form-control">
             
             {list.map(item => 
       
         
-      <option ref={userId} value={item.id} key={item.id}>{item.username}</option> 
+      <option ref={idAgent} value={item.id} key={item.id}>{item.username}</option> 
       )}
              
           </select>
            
         </div><br></br>
         <div className="form-group">
-          <input type="text" className="form-control" ref={accountNumber} placeholder="Name" />
+          <input type="text" className="form-control" ref={name} placeholder="Name" />
         </div><br></br>
         <div className="form-group">
-          <input type="text" className="form-control" ref={balance} placeholder="Location " />
+          <input type="text" className="form-control" ref={location} placeholder="Location " />
         </div><br></br>
         <div className="form-group">
-          <input type="text" className="form-control" ref={currency} placeholder="City " />
+          <input type="text" className="form-control" ref={city} placeholder="City " />
         </div> <br></br>
          
         <button className="btn btn-sm btn-primary" onClick={postData}> Add Agency  </button>

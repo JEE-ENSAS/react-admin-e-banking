@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CSmartTable } from '@coreui/react-pro'
-import { getListAccounts,enabledAccount,disabledAccount } from '../../services/AccountService';
+import { getListAgencies  } from '../../services/AgencyService';
 import Button from "react-bootstrap/Button";
 import { Plus } from "react-bootstrap-icons";
 import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
@@ -17,21 +17,20 @@ function AgenciesList() {
 
   useEffect(() => {
     let mounted = true;
-    getListAccounts()
+    getListAgencies()
       .then(items => {
         if(mounted) {
           setList(items)
-          console.log(`transfers list`);
+          
         }
       })
     return () => mounted = false;
   }, [])
   const columns = [
-    {key: 'accountNumber',},
-    {key: 'balance', },
-    {key: 'Type', }, 
-    {key: 'currency', _style: { width: '40%' } },
-    {key: 'creationDate', _style: { width: '20%' } },
+    {key: 'name',},
+    {key: 'location', },
+    {key: 'city', }, 
+    
     {
       key: 'show_details',
       label: '',
@@ -80,10 +79,11 @@ function AgenciesList() {
       }  
     })
   }
+
   return (
     <div>
         <div className="d-flex justify-content-end">
-           <a href="/cards#/account" >
+           <a href="/cards#/agency" >
            <Button> <Plus /> New Agency </Button>
             </a>
         </div>
@@ -134,7 +134,7 @@ function AgenciesList() {
                  <CCollapse visible={details.includes(item.id)}>
                    <CCardBody>
                       
-                     <p className="text-muted">Creation Date  : {item.creationDate}</p>
+                     
                      <CButton size="sm" color="info"  onClick={() => {
              
                history.push({

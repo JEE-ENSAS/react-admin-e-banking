@@ -17,6 +17,7 @@ function AccountsList() {
 
   useEffect(() => {
     let mounted = true;
+
     getListAccounts()
       .then(items => {
         if(mounted) {
@@ -24,7 +25,10 @@ function AccountsList() {
           console.log(`transfers list`);
         }
       })
+      
     return () => mounted = false;
+
+
   }, [])
   const columns = [
     {key: 'accountNumber',},
