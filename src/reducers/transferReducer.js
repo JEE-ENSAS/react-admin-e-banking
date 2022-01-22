@@ -1,4 +1,9 @@
-import { SET_DATA_DESTINATAIRE, SET_DATA_SOURCE, SET_TRANSFERT_INFO } from "src/actions/types";
+import {
+  FETCH_TRANSFETS,
+  SET_DATA_DESTINATAIRE,
+  SET_DATA_SOURCE,
+  SET_TRANSFERT_INFO,
+} from "src/actions/types";
 
 let initialState = {
   dataSource: { client: null, compte: null },
@@ -9,6 +14,8 @@ let initialState = {
     motif: "",
     operationType: "",
   },
+
+  transfers: [],
 };
 
 const tranferReducer = (state = initialState, action) => {
@@ -35,6 +42,9 @@ const tranferReducer = (state = initialState, action) => {
           [payload["field"]]: payload["value"],
         },
       };
+
+    case FETCH_TRANSFETS:
+      return { ...state, transfers: payload["items"] };
 
     default:
       return state;

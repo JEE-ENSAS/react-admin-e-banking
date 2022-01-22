@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchCardsNotAccepted } from "src/actions/cardActions";
+import { getListTransfersAction } from "src/actions/transfertActions";
 import { fetchAllUsers } from "src/actions/userActions";
 import {
   AppContent,
@@ -16,6 +17,7 @@ const DefaultLayout = () => {
   useEffect(() => {
     dispatch(fetchAllUsers());
     dispatch(fetchCardsNotAccepted());
+    dispatch(getListTransfersAction());
   }, []);
 
   return (
