@@ -39,7 +39,7 @@ export const registerAction = (registerForm) => async (dispatch) => {
     if (error) {
       dispatch({
         type: ERROR_ACTION,
-        payload: data,
+        payload: error,
       });
       return Promise.resolve(error);
     } else {
@@ -52,6 +52,10 @@ export const registerAction = (registerForm) => async (dispatch) => {
       return Promise.resolve(data);
     }
   } catch (err) {
+    dispatch({
+      type: ERROR_ACTION,
+      payload: err.message,
+    });
     return Promise.reject(err);
   }
 }

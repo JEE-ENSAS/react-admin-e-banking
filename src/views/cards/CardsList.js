@@ -100,7 +100,7 @@ function CardList() {
       <CSmartTable
         columns={columns}
         items={list}
-        itemsPerPage={7}
+        itemsPerPage={8}
         columnFilter
         columnSorter
         pagination

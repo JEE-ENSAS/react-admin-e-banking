@@ -20,7 +20,7 @@ import {
 import { useDispatch } from "react-redux";
 import { SET_TRANSFERT_INFO } from "src/actions/types";
 
-const Step2 = ({ dataSource, dataDestination, setStep  }) => {
+const Step2 = ({ dataSource, dataDestination, setStep }) => {
   return (
     <>
       <CRow className="mt-5">
@@ -39,7 +39,7 @@ const Step2 = ({ dataSource, dataDestination, setStep  }) => {
           />
         </CCol>
         <CCol style={{ padding: "1rem 1rem" }}>
-          <CardPrice  />
+          <CardPrice />
         </CCol>
       </CRow>
     </>
@@ -49,7 +49,7 @@ const Step2 = ({ dataSource, dataDestination, setStep  }) => {
 export default Step2;
 
 const CardConfirmation = ({ data, header, setStep }) => {
-  const {client ,  compte} = data
+  const { client, compte } = data;
   return (
     <>
       {data && client && compte && (
@@ -83,7 +83,7 @@ const CardPrice = () => {
   const [transferInfo, setTransferInfo] = useState({
     soustraction: "FROM_ME",
     price: 0,
-    motif: '',
+    motif: "",
   });
   const dispatch = useDispatch();
   const dispatchTransferHandler = (value, field) => {

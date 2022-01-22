@@ -1,8 +1,8 @@
 import http from "../http-common";
 
 const addCardURL = "https://my-card-service-t.herokuapp.com/Card/create";
-
 const Swal = require('sweetalert2')
+
 
 export function getList() {
     return fetch('https://my-api-gateway-t.herokuapp.com/Card/getAll')

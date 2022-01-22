@@ -1,7 +1,6 @@
 import { CLIENT_USER_URL } from ".";
 import http from "../http-common";
 
-
 class UserService {
   fetchUsers = async () => {
     let { data, error } = await http.get(CLIENT_USER_URL);
@@ -38,8 +37,7 @@ class UserService {
   updateUser = async (client) => {
     const { data, error } = await http.put(CLIENT_USER_URL + "/update", client);
     return { data, error };
-  }
-
+  };
 }
 
 export default new UserService();

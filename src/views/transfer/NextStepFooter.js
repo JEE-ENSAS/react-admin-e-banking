@@ -1,16 +1,26 @@
 import React from "react";
 import { CButton } from "@coreui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createTransferAction } from "src/actions/transfertActions";
 
 const NextStepFooter = ({ step, setStep }) => {
   const { dataSource, dataDestination, transferInfo } = useSelector(
     (state) => state["transferReducer"]
   );
 
+  const dispatch = useDispatch();
+
   const transferHandler = () => {
     console.log(dataSource, dataDestination, transferInfo);
+    const payload = {
+      accountId: dataSource.compte["id"],
+      destinationAccountId: dataDestination.compte["id"],
+      amount: transferInfo.price,
+      motif: transferInfo.motif,
+      soustraction: transferInfo.soustraction,
+    };
+    dispatch(createTransferAction(payload));
   };
-
 
   if (step === 0) {
     return (
