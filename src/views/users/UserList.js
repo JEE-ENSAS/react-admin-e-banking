@@ -36,7 +36,7 @@ function UserList({ from, step, setStep }) {
       clients = [
         ...clients,
         {
-          id,
+          _userId: id,
           cin,
           firstname,
           lastname,
@@ -55,6 +55,7 @@ function UserList({ from, step, setStep }) {
   }, [userState.users]);
 
   const getClickedClient = (client) => {
+    client = { ...client, id: client["_userId"] };
     dispatch(fetchAccountByUser(client.id));
     if (step === undefined || step === 0) {
       dispatch({
@@ -76,8 +77,9 @@ function UserList({ from, step, setStep }) {
   };
 
   const displayClientInfo = async (client) => {
-    let myClient = userState["users"].find((user) => user.id === client.id);
-    dispatch(fetchAccountByUser(client.id));
+    client = { ...client, id: client["_userId"] };
+    let myClient = userState["users"].find((user) => user.id === client['id']);
+    dispatch(fetchAccountByUser(client["id"]));
     dispatch({ type: FETCH_USER, payload: { user: myClient } });
     setDisplayClientInfoModal(!!client);
   };
