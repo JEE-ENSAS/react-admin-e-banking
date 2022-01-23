@@ -15,6 +15,13 @@ class AccountService {
     });
     return { data, error };
   };
+
+  getListAccounts = async () => {
+    const { data, error } = await http.get(ACCOUNT_URL + "getAll");
+    return { data, error };
+  };
+
+  
 }
 
 export default new AccountService();

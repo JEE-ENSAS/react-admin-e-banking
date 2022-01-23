@@ -52,7 +52,7 @@ function UserList({ from, step, setStep }) {
       }
     }
     setUsers([...clients]);
-  }, []);
+  }, [userState.users]);
 
   const getClickedClient = (client) => {
     dispatch(fetchAccountByUser(client.id));

@@ -87,7 +87,7 @@ function UserForm({ visible, setVisible }) {
     const { id, enabled } = card;
     dispatch(
       enableOrDisableCardAction({
-        cardFId: id,
+        cardId: id,
         action: enabled ? "disable" : "enable",
       })
     );

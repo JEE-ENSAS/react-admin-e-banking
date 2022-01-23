@@ -1,10 +1,13 @@
 import CardService from "src/services/card.service";
 import {
   ACCEPT_CARD,
+  CREATE_CARD,
+  ENABLE_DISABLE_CARD,
   ERROR_ACTION,
   FETCH_CARDS_BY_ACCOUNT_ID,
   FETCH_CARDS_NOT_ACCEPTED,
   SET_SELECTED_CARD,
+  UPDATE_CARD,
 } from "./types";
 
 export const fetchCardsByAccountId = (accountId) => async (dispatch) => {
@@ -44,17 +47,17 @@ export const fetchCardsNotAccepted = () => async (dispatch) => {
       });
       return Promise.resolve(data);
     }
-  } catch (err) { 
+  } catch (err) {
     return Promise.reject(err);
   }
 };
 
 export const enableOrDisableCardAction =
-  ({ cardId, action }) =>
+  ({ id, action }) =>
   async (dispatch) => {
     try {
       const { data, error } = await CardService.enableOrDisableCard({
-        cardId,
+        id,
         action,
       });
       if (error) {
@@ -65,8 +68,8 @@ export const enableOrDisableCardAction =
         return Promise.resolve(error);
       } else {
         dispatch({
-          type: SET_SELECTED_CARD,
-          payload: data,
+          type: ENABLE_DISABLE_CARD,
+          payload: { ...data, id },
         });
         return Promise.resolve(data);
       }
@@ -75,7 +78,7 @@ export const enableOrDisableCardAction =
     }
   };
 
-export const acceptCardAction = (cardId , cardNumber) => async (dispatch) => {
+export const acceptCardAction = (cardId, cardNumber) => async (dispatch) => {
   try {
     const { data, error } = await CardService.acceptCard(cardId);
     if (error) {
@@ -93,5 +96,55 @@ export const acceptCardAction = (cardId , cardNumber) => async (dispatch) => {
     }
   } catch (err) {
     return Promise.reject(err);
+  }
+};
+
+export const createCardAction = (card) => async (dispatch) => {
+  try {
+    const { data, error } = await CardService.createCard(card);
+    if (error) {
+      dispatch({
+        type: ERROR_ACTION,
+        payload: error.message,
+      });
+      return Promise.resolve(error);
+    } else {
+      dispatch({
+        type: CREATE_CARD,
+        payload: data,
+      });
+      return Promise.resolve(data);
+    }
+  } catch (error) {
+    dispatch({
+      type: ERROR_ACTION,
+      payload: error,
+    });
+    return Promise.resolve(error);
+  }
+};
+
+export const updateCardAction = (card) => async (dispatch) => {
+  try {
+    const { data, error } = await CardService.updateCard(card);
+    if (error) {
+      dispatch({
+        type: ERROR_ACTION,
+        payload: error.message,
+      });
+      return Promise.resolve(error);
+    } else {
+      dispatch({
+        type: UPDATE_CARD,
+        payload: data,
+      });
+      return Promise.resolve(data);
+    }
+  } catch (error) {
+    dispatch({
+      type: ERROR_ACTION,
+      payload: error,
+    });
+    return Promise.resolve(error);
   }
 };

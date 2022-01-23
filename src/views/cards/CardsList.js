@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { CSmartTable } from "@coreui/react-pro";
-import {
-  getList,
-  enabledCard,
-  disabledCard,
-} from "../../services/CardDataService";
 import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "../../helpers/BtnPlus";
+import { useDispatch, useSelector } from "react-redux";
+import { DETAILS_CARD } from "src/actions/types";
+import { enableOrDisableCardAction } from "../../actions/cardActions";
+
+const columns = [
+  { key: "cardNumber" },
+  { key: "csv" },
+  { key: "dateExpiration", _style: { width: "40%" } },
+  { key: "type", _style: { width: "20%" } },
+  { key: "isEnabled" },
+  {
+    key: "show_details",
+    label: "",
+    _style: { width: "1%" },
+    filter: false,
+    sorter: false,
+    _props: { color: "", className: "fw-semibold" },
+  },
+];
 
 function CardList() {
-  const [list, setList] = useState([]);
+  const cardState = useSelector((state) => state["cardReducer"]);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
+  const [cards, setCards] = useState(cardState.cardsNotAccepted);
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    getList().then((items) => setList(items));
-  }, []);
-
-  const history = useHistory();
-
-  const columns = [
-    { key: "cardNumber" },
-    { key: "csv" },
-    { key: "dateExpiration", _style: { width: "40%" } },
-    { key: "type", _style: { width: "20%" } },
-    { key: "isEnabled" },
-
-    {
-      key: "show_details",
-      label: "",
-      _style: { width: "1%" },
-      filter: false,
-      sorter: false,
-      _props: { color: "", className: "fw-semibold" },
-    },
-  ];
+    setCards([...cardState.cardsNotAccepted]);
+  }, [cardState.cardsNotAccepted]);
 
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
@@ -49,45 +47,37 @@ function CardList() {
     setDetails(newDetails);
   };
 
-  const enableCard = (index) => {
+  const updateCardHandler = (card) => {
+    dispatch({ type: DETAILS_CARD, payload: card });
+    history.push({
+      pathname: "/editCard",
+      id: card.id,
+    });
+  };
+
+  const enableCardOrDisable = (card) => {
+    const { id, enabled } = card;
     Swal.fire({
-      title: "Do you want to enable this card?",
-      showDenyButton: true,
+      title:
+        "Do you want to " + (enabled ? "disable" : "enable") + " this card?",
       showCancelButton: true,
-      confirmButtonText: "Enable",
-      denyButtonText: `Don't`,
+      confirmButtonText: enabled ? "Disable" : "Enable",
     }).then((result) => {
       if (result.isConfirmed) {
-        enabledCard(index);
-      } else if (result.isDenied) {
-        Swal.fire("This card is disabled", "", "info");
+        const action = enabled ? "disable" : "enable";
+        dispatch(enableOrDisableCardAction({ id, action }));
       }
     });
   };
-  const disableCard = (index) => {
-    Swal.fire({
-      title: "Do you want to disable this card?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Enable",
-      denyButtonText: `Don't`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        disabledCard(index);
-      } else if (result.isDenied) {
-        Swal.fire("This card is enabled", "", "info");
-      }
-    });
-  };
+
   const deleteCard = (index) => {
     Swal.fire({
       title: "Do you want to delete this card?",
-
       showCancelButton: true,
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        enabledCard(index);
+        // enabledCard(index);
       }
     });
   };
@@ -99,7 +89,7 @@ function CardList() {
       </div>
       <CSmartTable
         columns={columns}
-        items={list}
+        items={cards}
         itemsPerPage={8}
         columnFilter
         columnSorter
@@ -125,9 +115,7 @@ function CardList() {
                   variant="outline"
                   shape="square"
                   size="sm"
-                  onClick={() => {
-                    toggleDetails(item.id);
-                  }}
+                  onClick={() => toggleDetails(item.id)}
                 >
                   {details.includes(item.id) ? "Hide" : "Action"}
                 </CButton>
@@ -142,45 +130,27 @@ function CardList() {
                   <p className="text-muted">Use since: {item.dateExpiration}</p>
                   <CButton
                     size="sm"
+                    className="mx-1"
                     color="info"
-                    onClick={() => {
-                      history.push({
-                        pathname: "/editCard",
-                        id: item.id,
-                      });
-                    }}
+                    onClick={() => updateCardHandler(item)}
                   >
                     Update
                   </CButton>
-                  {"    "}
+
                   <CButton
                     size="sm"
-                    color="success"
-                    className="ml-1"
-                    onClick={() => {
-                      enableCard(item.id);
-                    }}
+                    className="mx-1"
+                    color={item.enabled ? "warning" : "success"}
+                    onClick={() => enableCardOrDisable(item)}
                   >
-                    Activate
+                    {item.enabled ? "disable" : "enable"}
                   </CButton>
-                  {"    "}
+
                   <CButton
                     size="sm"
-                    color="warning"
-                    onClick={() => {
-                      disableCard(item.id);
-                    }}
-                  >
-                    Desactivate
-                  </CButton>
-                  {"    "}
-                  <CButton
-                    size="sm"
+                    className="mx-1"
                     color="danger"
-                    className="ml-1"
-                    onClick={() => {
-                      deleteCard(item.id);
-                    }}
+                    onClick={() => deleteCard(item.id)}
                   >
                     Delete
                   </CButton>

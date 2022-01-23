@@ -9,9 +9,9 @@ class CardService {
     return { data, error };
   };
 
-  enableOrDisableCard = async ({ cardId, action }) => {
+  enableOrDisableCard = async ({ id, action }) => {
     const { data, error } = await http.post(`${CARD_URL}${action}`, {
-      id: cardId,
+      id,
     });
     return { data, error };
   };
@@ -23,6 +23,15 @@ class CardService {
 
   getCardsNoAccepted = async () => {
     const { data, error } = await http.get(`${CARD_URL}getNotAcceptable`);
+    return { data, error };
+  };
+
+  createCard = async (cardInfo) => {
+    const { data, error } = await http.post(`${CARD_URL}create`, cardInfo);
+    return { data, error };
+  };
+  updateCard = async (cardInfo) => {
+    const { data, error } = await http.put(`${CARD_URL}update`, cardInfo);
     return { data, error };
   };
 }
