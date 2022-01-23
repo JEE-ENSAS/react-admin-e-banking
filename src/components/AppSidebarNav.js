@@ -57,9 +57,10 @@ export const AppSidebarNav = ({ items }) => {
   //   );
   // };
 
-  let myItems = [];
-  const { user } = useSelector((state) => state["authReducer"]);
-  if (Object.keys(user).length > 0) {
+  let myItems = [...items];
+  const authState = useSelector((state) => state["authReducer"]);
+  if (authState && authState.user && authState.user['roles'].length > 0) {
+    const user = authState.user;
     if (user.roles.includes(ALL_ROLES) || user.roles.includes(ROLE_ADMIN)) {
       myItems = [...items];
     } else {
@@ -67,7 +68,7 @@ export const AppSidebarNav = ({ items }) => {
         (item) => item.state && item.state.role !== ROLE_ADMIN
       );
     }
-  }  
+  } 
   return (
     <React.Fragment>
       {myItems && myItems.map((item, index) => navItem(item, index))}
