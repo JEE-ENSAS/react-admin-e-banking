@@ -1,30 +1,37 @@
-import React, { useRef, useState, useEffect } from "react";
-import { getListAccounts } from "../../services/AccountService";
-import { baseURL } from "../../services/CardDataService";
+// eslint-disable-next-line react-hooks/exhaustive-deps
+import React, { useState, useEffect } from "react";
+import { getListAccountsAction } from "../../actions/accountAction";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { createCardAction } from "src/actions/cardActions";
 function CardForm() {
-  const [list, setList] = useState([]);
+  const accountState = useSelector((state) => state["accountReducer"]);
+  const [list, setList] = useState(accountState.allAccounts);
+  const [cardFields, setCardFields] = useState({
+    accountId: "",
+    cardNumber: "",
+    csv: "",
+    dateExpiration: "",
+    type: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const onChangeCardHandler = (e, field) => {
+    setCardFields({ ...cardFields, [field]: e.target.value });
+  };
 
   useEffect(() => {
-    getListAccounts().then((items) => setList(items));
+    dispatch(getListAccountsAction());
   }, []);
 
-  const accountId = useRef(null);
-  const cardNumber = useRef(null);
-  const csv = useRef(null);
-  const dateExpiration = useRef(null);
-  const type = useRef(null);
+  useEffect(() => {
+    setList([...accountState.allAccounts]);
+  }, [accountState.allAccounts]);
 
-  async function postData() {
+  const creatCard = async () => {
     try {
-      const res = await fetch(baseURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
-
+      const res = await dispatch(createCardAction(cardFields));
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
         throw new Error(message);
@@ -40,11 +47,11 @@ function CardForm() {
       Swal.fire({
         title: "Try again!",
         text: "Card has not been saved:" + err.message,
-        icon: "info",
+        icon: "error",
         confirmButtonText: "Ok",
       });
     }
-  }
+  };
 
   return (
     <div className="card">
@@ -55,9 +62,13 @@ function CardForm() {
       <div className="card-body">
         <div className="form-group">
           <label>Select Account Number : </label>
-          <select className="form-control">
+          <select
+            className="form-control"
+            value={cardFields.accountId}
+            onChange={(e) => onChangeCardHandler(e, "accountId")}
+          >
             {list.map((item) => (
-              <option ref={accountId} value={item.id} key={item.id}>
+              <option value={item.id} key={item.id}>
                 {item.accountNumber}
               </option>
             ))}
@@ -68,8 +79,9 @@ function CardForm() {
           <input
             type="text"
             className="form-control"
-            ref={cardNumber}
             placeholder="cardNumber "
+            value={cardFields.cardNumber}
+            onChange={(e) => onChangeCardHandler(e, "cardNumber")}
           />
         </div>
         <br></br>
@@ -77,8 +89,9 @@ function CardForm() {
           <input
             type="text"
             className="form-control"
-            ref={csv}
             placeholder="csv "
+            value={cardFields.csv}
+            onChange={(e) => onChangeCardHandler(e, "csv")}
           />
         </div>
         <br></br>
@@ -86,27 +99,26 @@ function CardForm() {
           <input
             type="date"
             className="form-control"
-            ref={dateExpiration}
             placeholder="dateExpiration "
+            value={cardFields.dateExpiration}
+            onChange={(e) => onChangeCardHandler(e, "dateExpiration")}
           />
         </div>
         <br></br>
         <div className="form-group">
           <label>Select Card Type :</label>
-          <select className="form-control">
-            <option ref={type} value={"MASTERCARD"}>
-              MASTERCARD
-            </option>
-            <option ref={type} value={"VISA"}>
-              VISA
-            </option>
-            <option ref={type} value={"VIRTUAL"}>
-              VIRTUAL
-            </option>
+          <select
+            className="form-control"
+            value={cardFields.type}
+            onChange={(e) => onChangeCardHandler(e, "type")}
+          >
+            <option value={"MASTERCARD"}>MASTERCARD</option>
+            <option value={"VISA"}>VISA</option>
+            <option value={"VIRTUAL"}>VIRTUAL</option>
           </select>
         </div>
         <br></br>
-        <button className="btn btn-sm btn-primary" onClick={postData}>
+        <button className="btn btn-sm btn-primary" onClick={() => creatCard()}>
           Add Card
         </button>
       </div>

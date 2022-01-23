@@ -1,127 +1,142 @@
-import React, { useRef, useState, useEffect } from "react";
-import { getListAccounts } from "../../services/AccountService";
-import { updateURL, getCard } from "../../services/CardDataService";
-import { useLocation } from "react-router-dom";
- import Swal from "sweetalert2";
-
+import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { getListAccountsAction } from "src/actions/accountAction";
+import { updateCardAction } from "src/actions/cardActions";
+ 
 function UpdateCard() {
+  const dispatch = useDispatch();
+
+  const accountState = useSelector((state) => state["accountReducer"]);
+  const cardState = useSelector((state) => state["cardReducer"]);
+
   const [list, setList] = useState([]);
-  const [card, setCard] = useState([]);
-  const location = useLocation();
+  const [card, setCard] = useState({});
+  const [cardFields, setCardFields] = useState({
+    accountId: "",
+    cardNumber: "",
+    csv: "",
+    dateExpiration: "",
+    type: "",
+  });
 
   useEffect(() => {
-    getCard(location["id"]).then((items) => setCard(items));
-    getListAccounts().then((items) => setList(items));
+    dispatch(getListAccountsAction());
   }, []);
 
-  const accountId = useRef(null);
-  const cardNumber = useRef(null);
-  const csv = useRef(null);
-  const dateExpiration = useRef(null);
-  const type = useRef(null);
+  useEffect(() => {
+    setList([...accountState.allAccounts]);
+    setCard({ ...cardState.cardDetails, cardNumber: "1234567890" });
+  }, [accountState.allAccounts, cardState.cardDetails]);
 
-  async function postData() {
+  const onChangeCardHandler = (e, field) => {
+    setCardFields({ ...cardFields, [field]: e.target.value });
+  };
+
+  const updateCard = async () => {
     try {
-      const res = await fetch(updateURL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
-
+      const res = await dispatch(updateCardAction(card));
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
         throw new Error(message);
       }
 
-      Swal.fire({
+      dispalySwal({
         title: "Updated!",
         text: "this card has been updated",
         icon: "success",
-        confirmButtonText: "Ok",
       });
     } catch (err) {
-      Swal.fire({
+      dispalySwal({
         title: "Try again!",
         text: "Card has not been updated:" + err.message,
-        icon: "info",
-        confirmButtonText: "Ok",
+        icon: "error",
       });
     }
-  }
+  };
 
   return (
     <div className="card">
       <div className="card-header text-center">
         <i className="fa fa-pencil mx-1"></i> Update Card
       </div>
-      <div className="card-body">
-        <div className="form-group">
-          <label>Select Account Number : </label>
-          <select className="form-control">
-            {list.map((item) => (
-              <option ref={accountId} value={item.id} key={item.id}>
-                {item.accountNumber}
-              </option>
-            ))}
-          </select>
+      {card && card.type && (
+        <div className="card-body">
+          <div className="form-group">
+            <label>Select Account Number : </label>
+            <select
+              className="form-control"
+              value={cardFields.accountId}
+              onChange={(e) => onChangeCardHandler(e, "accountId")}
+            >
+              {list.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.accountNumber}
+                </option>
+              ))}
+            </select>
+          </div>
+          <br></br>
+          <div className="form-group">
+            <input
+              className="form-control"
+              placeholder="cardNumber"
+              value={cardFields.cardNumber}
+              onChange={(e) => onChangeCardHandler(e, "cardNumber")}
+            />
+          </div>
+          <br></br>
+          <div className="form-group">
+            <input
+              className="form-control"
+              placeholder="csv "
+              value={cardFields.csv}
+              onChange={(e) => onChangeCardHandler(e, "csv")}
+            />
+          </div>
+          <br></br>
+          <div className="form-group">
+            <input
+              type="date"
+              className="form-control"
+              placeholder="dateExpiration "
+              value={cardFields.dateExpiration}
+              onChange={(e) => onChangeCardHandler(e, "dateExpiration")}
+            />
+          </div>
+          <br></br>
+          <div className="form-group">
+            <label>Select Card Type :</label>
+            <select
+              className="form-control"
+              value={cardFields.type}
+              onChange={(e) => onChangeCardHandler(e, "type")}
+            >
+              <option value="MASTERCARD">MASTERCARD</option>
+              <option value="VISA">VISA</option>
+              <option value="VIRTUAL">VIRTUAL</option>
+            </select>
+          </div>
+          <br></br>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => updateCard()}
+          >
+            Update Card
+          </button>
         </div>
-        <br></br>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            defaultValue={card.cardNumber || ""}
-            ref={cardNumber}
-            placeholder="cardNumber "
-          />
-        </div>
-        <br></br>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            defaultValue={card.csv || ""}
-            ref={csv}
-            placeholder="csv "
-          />
-        </div>
-        <br></br>
-        <div className="form-group">
-          <input
-            type="date"
-            className="form-control"
-            defaultValue={card.dateExpiration || ""}
-            ref={dateExpiration}
-            placeholder="dateExpiration "
-          />
-        </div>
-        <br></br>
-        <div className="form-group">
-          <label>Select Card Type :</label>
-          <select className="form-control">
-            <option ref={type} value={card.type || ""}>
-              {card.type || ""}
-            </option>
-            <option ref={type} value={"MASTERCARD"}>
-              MASTERCARD
-            </option>
-            <option ref={type} value={"VISA"}>
-              VISA
-            </option>
-            <option ref={type} value={"VIRTUAL"}>
-              VIRTUAL
-            </option>
-          </select>
-        </div>
-        <br></br>
-        <button className="btn btn-sm btn-primary" onClick={postData}>
-          Update Card
-        </button>
-      </div>
+      )}
     </div>
   );
 }
 
 export default UpdateCard;
+
+const dispalySwal = ({ title, text, icon }) => {
+  Swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText: "Ok",
+  });
+};
