@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getListUsers, baseURL } from "../../services/AccountService";
-  
+
 function AccountForm() {
   const Swal = require("sweetalert2");
 
@@ -18,12 +18,21 @@ function AccountForm() {
 
   async function postData() {
     try {
+      const data = {
+        accountNumber: accountNumber.current.value,
+        balance: balance.current.value,
+        creationDate: new Date(),
+        currency: currency.current.value,
+        type: type.current.value,
+        userId: userId.current.value,
+      };
+
       const res = await fetch(baseURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) {

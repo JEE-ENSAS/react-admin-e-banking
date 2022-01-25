@@ -4,6 +4,7 @@ import { getListAccountsAction } from "../../actions/accountAction";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createCardAction } from "src/actions/cardActions";
+
 function CardForm() {
   const accountState = useSelector((state) => state["accountReducer"]);
   const [list, setList] = useState(accountState.allAccounts);
@@ -12,7 +13,7 @@ function CardForm() {
     cardNumber: "",
     csv: "",
     dateExpiration: "",
-    type: "",
+    type: "MASTERCARD",
   });
 
   const dispatch = useDispatch();
@@ -27,22 +28,30 @@ function CardForm() {
 
   useEffect(() => {
     setList([...accountState.allAccounts]);
+    setCardFields({
+      ...cardFields,
+      accountId:
+        accountState.allAccounts.length > 0
+          ? accountState.allAccounts[0].id
+          : "",
+    });
   }, [accountState.allAccounts]);
 
   const creatCard = async () => {
     try {
-      const res = await dispatch(createCardAction(cardFields));
-      if (!res.ok) {
-        const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        throw new Error(message);
+      const validateCardFields = {
+        ...cardFields,
+        csv: parseInt(cardFields.csv),
+      };
+      const res = await dispatch(createCardAction(validateCardFields));
+      if (res["id"]) {
+        Swal.fire({
+          title: "Saved!",
+          text: "New card has been saved",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
       }
-
-      Swal.fire({
-        title: "Saved!",
-        text: "New card has been saved",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
     } catch (err) {
       Swal.fire({
         title: "Try again!",
@@ -99,7 +108,7 @@ function CardForm() {
           <input
             type="date"
             className="form-control"
-            placeholder="dateExpiration "
+            placeholder="dateExpiration"
             value={cardFields.dateExpiration}
             onChange={(e) => onChangeCardHandler(e, "dateExpiration")}
           />

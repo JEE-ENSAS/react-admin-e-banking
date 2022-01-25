@@ -1,7 +1,7 @@
 import {
   FETCH_ACCOUNTS_BY_USER,
   SET_SELECTED_ACCOUNT,
-  FETCH_ALL_ACCOUNTS
+  FETCH_ALL_ACCOUNTS,
 } from "src/actions/types";
 
 const initialState = {
@@ -14,10 +14,8 @@ const accountReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-
     case FETCH_ALL_ACCOUNTS:
-       return { ...state, allAccounts: payload };
-
+      return { ...state, allAccounts: payload };
 
     case FETCH_ACCOUNTS_BY_USER:
       return { ...state, accountsByUser: payload };

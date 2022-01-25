@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { getListAccountsAction } from "src/actions/accountAction";
 import { updateCardAction } from "src/actions/cardActions";
- 
+
 function UpdateCard() {
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ function UpdateCard() {
     cardNumber: "",
     csv: "",
     dateExpiration: "",
-    type: "",
+    type: "MASTERCARD",
   });
 
   useEffect(() => {
@@ -26,26 +26,35 @@ function UpdateCard() {
 
   useEffect(() => {
     setList([...accountState.allAccounts]);
-    setCard({ ...cardState.cardDetails, cardNumber: "1234567890" });
+    if (accountState.allAccounts.length > 0) {
+      setCardFields({
+        ...cardFields,
+        accountId: accountState.allAccounts[0]["id"],
+      });
+    }
+    setCard({ ...cardState.cardDetails });
   }, [accountState.allAccounts, cardState.cardDetails]);
 
   const onChangeCardHandler = (e, field) => {
     setCardFields({ ...cardFields, [field]: e.target.value });
   };
 
-  const updateCard = async () => {
+  const updateCardhandler = async () => {
     try {
-      const res = await dispatch(updateCardAction(card));
-      if (!res.ok) {
-        const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        throw new Error(message);
+      const res = await dispatch(
+        updateCardAction({
+          ...card,
+          ...cardFields,
+          csv: parseInt(cardFields.csv),
+        })
+      );
+      if (res["id"]) {
+        dispalySwal({
+          title: "Updated!",
+          text: "this card has been updated",
+          icon: "success",
+        });
       }
-
-      dispalySwal({
-        title: "Updated!",
-        text: "this card has been updated",
-        icon: "success",
-      });
     } catch (err) {
       dispalySwal({
         title: "Try again!",
@@ -60,7 +69,7 @@ function UpdateCard() {
       <div className="card-header text-center">
         <i className="fa fa-pencil mx-1"></i> Update Card
       </div>
-      {card && card.type && (
+      {card && card["type"] && (
         <div className="card-body">
           <div className="form-group">
             <label>Select Account Number : </label>
@@ -120,7 +129,7 @@ function UpdateCard() {
           <br></br>
           <button
             className="btn btn-sm btn-primary"
-            onClick={() => updateCard()}
+            onClick={() => updateCardhandler()}
           >
             Update Card
           </button>

@@ -28,9 +28,9 @@ class CardService {
 
   createCard = async (cardInfo) => {
     const { data, error } = await http.post(`${CARD_URL}create`, cardInfo);
-    return { data, error };
+     return { data, error };
   };
-  updateCard = async (cardInfo) => {
+  updateCard = async (cardInfo) => {  
     const { data, error } = await http.put(`${CARD_URL}update`, cardInfo);
     return { data, error };
   };

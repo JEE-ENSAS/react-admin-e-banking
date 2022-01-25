@@ -3,6 +3,7 @@ import { DISABLE_USER, ENABLE_USER, FETCH_USER, FETCH_USERS, UPDATE_USER } from 
 const initialState = {
   users: [],
   user: {},
+  
   sidebarShow: true,
   sidebarUnfoldable: true,
 };
