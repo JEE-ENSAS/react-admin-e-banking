@@ -16,7 +16,7 @@ function AgencyForm() {
 
   async function postData() {
     try {
-      const res = await fetch(baseURL, {
+      const res = await fetch(addURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,6 +44,8 @@ function AgencyForm() {
       });
     }
   }
+
+  
 
   return (
     <div className="card">
