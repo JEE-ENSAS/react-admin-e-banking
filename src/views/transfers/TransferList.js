@@ -12,7 +12,8 @@ const columns = [
   { key: "costType", _style: { width: "20%" } },
 ];
 
-function CardList() {
+function TransferList() {
+
   const transferState = useSelector((state) => state["transferReducer"]);
   const [list, setList] = useState([]);
 
@@ -23,10 +24,10 @@ function CardList() {
     });
     setList([...transfers]);
   }, [transferState.transfers]);
-
+ 
   return (
     <>
-      <h4> Transfers List</h4>
+      <h4> Transfers List </h4>
       <hr />
       <CSmartTable
         columns={columns}
@@ -41,4 +42,4 @@ function CardList() {
   );
 }
 
-export default CardList;
+export default TransferList;

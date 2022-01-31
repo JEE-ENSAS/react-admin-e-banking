@@ -13,7 +13,7 @@ const columns = [
   { key: "csv" },
   { key: "dateExpiration", _style: { width: "40%" } },
   { key: "type", _style: { width: "20%" } },
-  { key: "isEnabled" },
+  { key: "enabled" },
   {
     key: "show_details",
     label: "",
@@ -100,12 +100,17 @@ function CardList() {
           hover: true,
         }}
         scopedColumns={{
-          isEnabled: (item) => (
+          enabled: (item) =>{
+            
+            return(
+            
+            
+            
             <td>
-              <CBadge bg="danger"> </CBadge>
-              {item.isEnabled ? "Active" : "Not Active"}
+              {item.enabled ? "Active" : "Not Active"}
             </td>
-          ),
+            
+          )},
 
           show_details: (item) => {
             return (

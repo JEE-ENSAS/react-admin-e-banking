@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { CSmartTable } from '@coreui/react-pro'
 import { getListAgencies  } from '../../services/AgencyService';
-import Button from "react-bootstrap/Button";
-import { Plus } from "react-bootstrap-icons";
-import { CCollapse ,CButton,CBadge,CCardBody} from '@coreui/react';
+import Swal from "sweetalert2";
+import BtnPlus from "src/helpers/BtnPlus";
+import { CCollapse ,CButton,CCardBody} from '@coreui/react';
 import { useHistory  } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function AgenciesList() {
   const history = useHistory();
-
-  const [list, setList] = useState([]);
+  
   const [details, setDetails] = useState([]);
 
+  const agencyState = useSelector((state) => state["agencyReducer"]);
+  const [list, setList] = useState([]);
+
   useEffect(() => {
-    let mounted = true;
-    getListAgencies()
-      .then(items => {
-        if(mounted) {
-          setList(items)
-          
-        }
-      })
-      .then((items) => setList(items));
-  }, []);
+    setList([...agencyState.agencies]);
+  }, [agencyState.agencies]);
 
   const columns = [
     {key: 'name',},
@@ -38,9 +33,7 @@ function AgenciesList() {
       _props: { color: "", className: "fw-semibold" },
     },
   ];
-  const getBadge = (isEnabled) => {
-    return isEnabled ? "success" : "warning";
-  };
+  
 
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
@@ -69,14 +62,13 @@ function AgenciesList() {
 
   return (
     <div>
-        <div className="d-flex justify-content-end">
-           <a href="/cards#/agency" >
-           <Button> <Plus /> New Agency </Button>
-            </a>
-        </div>
 
-     
-        <h3> Agencies List</h3>
+        <div className="py-0 d-flex justify-content-between align-items-center ">
+        <h4>Agencies List</h4>
+        <BtnPlus pathname="/agency" label="New Agency" />
+      </div>
+
+
       <hr></hr>
         <CSmartTable
            activePage={3}
@@ -91,14 +83,6 @@ function AgenciesList() {
            itemsPerPage={5}
            pagination
            scopedColumns={{
-             status: (item) => (
-               
-              
-               <td>
-                 <CBadge color={getBadge(item.isEnabled)}>{
-                  item.isEnabled == true? 'data' : 'null' }    </CBadge>
-               </td>
-             ),
              show_details: (item) => {
                return (
                  <td className="py-2">

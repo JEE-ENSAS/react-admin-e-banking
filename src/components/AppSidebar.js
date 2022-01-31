@@ -42,7 +42,7 @@ const AppSidebar = () => {
       >
         <CSidebarBrand className="d-none d-md-flex" to="/">
           <Link to="/">
-            <p className="banking-logo">E-banking</p>
+            <p className="banking-logo"><img src=""></img></p>
           </Link>
         </CSidebarBrand>
         <CSidebarNav>

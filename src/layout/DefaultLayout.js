@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { fetchCardsNotAccepted } from "src/actions/cardActions";
 import { getListTransfersAction } from "src/actions/transfertActions";
 import { fetchAllUsers } from "src/actions/userActions";
+import { getListAgenciesAction } from "src/actions/agencyAction";
 import {
   AppContent,
   AppSidebar,
@@ -15,6 +16,7 @@ const DefaultLayout = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getListAgenciesAction());
     dispatch(fetchAllUsers());
     dispatch(fetchCardsNotAccepted());
     dispatch(getListTransfersAction());
