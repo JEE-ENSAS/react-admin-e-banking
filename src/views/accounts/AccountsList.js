@@ -37,6 +37,7 @@ function AccountsList() {
     { key: "balance" },
     { key: "Type" },
     { key: "currency", _style: { width: "40%" } },
+    { key: "enabled", _style: { width: "20%" } },
     { key: "creationDate", _style: { width: "20%" } },
     {
       key: "show_details",
@@ -119,13 +120,29 @@ function AccountsList() {
           hover: true,
         }}
         scopedColumns={{
-          status: (item) => (
+          
+          Type: (item) => {
+            console.log(item);
+             
+            return(
             <td>
-              <CBadge color={getBadge(item.isEnabled)}>
-                {item.isEnabled ? "data" : "null"}
-              </CBadge>
+            
+              
+                {item.type}
+              
             </td>
-          ),
+          )},
+          enabled: (item) =>{
+            
+            return(
+            
+            
+            
+            <td>
+              {item.enabled ? "Active" : "Not Active"}
+            </td>
+            
+          )},
           show_details: (item) => {
             return (
               <td className="py-2">

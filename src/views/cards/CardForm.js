@@ -1,11 +1,12 @@
-// eslint-disable-next-line react-hooks/exhaustive-deps
 import React, { useState, useEffect } from "react";
 import { getListAccountsAction } from "../../actions/accountAction";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createCardAction } from "src/actions/cardActions";
+import { useHistory } from "react-router-dom";
 
 function CardForm() {
+  const history = useHistory();
   const accountState = useSelector((state) => state["accountReducer"]);
   const [list, setList] = useState(accountState.allAccounts);
   const [cardFields, setCardFields] = useState({
@@ -51,6 +52,7 @@ function CardForm() {
           icon: "success",
           confirmButtonText: "Ok",
         });
+        history.push({ pathname: "/cards" });
       }
     } catch (err) {
       Swal.fire({
