@@ -6,7 +6,6 @@ import {
   ERROR_ACTION,
   FETCH_CARDS_BY_ACCOUNT_ID,
   FETCH_CARDS_NOT_ACCEPTED,
-  SET_SELECTED_CARD,
   UPDATE_CARD,
 } from "./types";
 
@@ -107,7 +106,7 @@ export const createCardAction = (card) => async (dispatch) => {
         type: ERROR_ACTION,
         payload: error.message,
       });
-      return Promise.resolve(error);
+      return Promise.reject(error);
     } else {
       dispatch({
         type: CREATE_CARD,
@@ -120,7 +119,7 @@ export const createCardAction = (card) => async (dispatch) => {
       type: ERROR_ACTION,
       payload: error,
     });
-    return Promise.resolve(error);
+    return Promise.reject(error);
   }
 };
 
@@ -132,7 +131,7 @@ export const updateCardAction = (card) => async (dispatch) => {
         type: ERROR_ACTION,
         payload: error.message,
       });
-      return Promise.resolve(error);
+      return Promise.reject(error);
     } else {
       dispatch({
         type: UPDATE_CARD,
@@ -145,6 +144,6 @@ export const updateCardAction = (card) => async (dispatch) => {
       type: ERROR_ACTION,
       payload: error,
     });
-    return Promise.resolve(error);
+    return Promise.reject(error);
   }
 };

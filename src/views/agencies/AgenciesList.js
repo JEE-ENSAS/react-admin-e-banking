@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { CSmartTable } from "@coreui/react-pro";
-import { getListAccounts } from "../../services/AccountService";
-import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { CSmartTable } from '@coreui/react-pro' 
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
-import { DateTimeFormat } from "src/helpers/DateTimeFormat";
+import { CCollapse ,CButton,CCardBody} from '@coreui/react';
+import { useHistory  } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function AgenciesList() {
   const history = useHistory();
-
-  const [list, setList] = useState([]);
+  
   const [details, setDetails] = useState([]);
 
+  const agencyState = useSelector((state) => state["agencyReducer"]);
+  const [list, setList] = useState([]);
+
   useEffect(() => {
-    getListAccounts()
-      .then((items) => {
-        if (items && items.length > 0) {
-          items.forEach((item) => {
-            item.creationDate = DateTimeFormat(item.creationDate);
-            return item;
-          });
-        }
-      })
-      .then((items) => setList(items));
-  }, []);
+    setList([...agencyState.agencies]);
+  }, [agencyState.agencies]);
 
   const columns = [
-    { key: "accountNumber" },
-    { key: "balance" },
-    { key: "Type" },
-    { key: "currency", _style: { width: "40%" } },
-    { key: "creationDate", _style: { width: "20%" } },
+    {key: 'name',},
+    {key: 'location', },
+    {key: 'city', }, 
+    
     {
       key: "show_details",
       label: "",
@@ -41,9 +32,7 @@ function AgenciesList() {
       _props: { color: "", className: "fw-semibold" },
     },
   ];
-  const getBadge = (isEnabled) => {
-    return isEnabled ? "success" : "warning";
-  };
+  
 
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
@@ -64,88 +53,91 @@ function AgenciesList() {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-      }
-    });
-  };
+      }  
+    })
+  }
+
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center ">
-        <h4>Agencies List</h4>
-        <BtnPlus pathname="/account" label="New Agency" />
-      </div>
-      <hr />
-      <CSmartTable
-        columns={columns}
-        items={list}
-        itemsPerPage={7}
-        columnFilter
-        columnSorter
-        pagination
-        clickableRows
-        scopedColumns={{
-          status: (item) => (
-            <td>
-              <CBadge color={getBadge(item.isEnabled)}>
-                {item.isEnabled ? "data" : "null"}
-              </CBadge>
-            </td>
-          ),
-          show_details: (item) => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                  onClick={() => {
-                    toggleDetails(item.id);
-                  }}
-                >
-                  {details.includes(item.id) ? "Hide" : "Action"}
-                </CButton>
-              </td>
-            );
-          },
-          details: (item) => {
-            return (
-              <CCollapse visible={details.includes(item.id)}>
-                <CCardBody>
-                  <p className="text-muted">
-                    Creation Date : DateTimeFormat(item.creationDate)
-                  </p>
-                  <CButton
-                    size="sm"
-                    color="info"
-                    onClick={() => {
-                      history.push({
-                        pathname: "/editAccount",
-                        id: item.id,
-                      });
-                    }}
-                  >
-                    Update
-                  </CButton>
-                  {"    "}
 
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="ml-1"
-                    onClick={() => {
-                      deleteAccount(item.id);
-                    }}
-                  >
-                    Delete
-                  </CButton>
-                </CCardBody>
-              </CCollapse>
-            );
-          },
-        }}
-      />
-    </div>
-  );
-}
+        <div className="py-0 d-flex justify-content-between align-items-center ">
+        <h4>Agencies List</h4>
+        <BtnPlus pathname="/agency" label="New Agency" />
+      </div>
+
+
+      <hr></hr>
+        <CSmartTable
+           activePage={3}
+           cleaner
+           clickableRows
+           columns={columns}
+           columnFilter
+           columnSorter
+           footer
+           items={list}
+           itemsPerPageSelect
+           itemsPerPage={5}
+           pagination
+           scopedColumns={{
+             show_details: (item) => {
+               return (
+                 <td className="py-2">
+                   <CButton
+                     color="primary"
+                     variant="outline"
+                     shape="square"
+                     size="sm"
+                     onClick={() => {
+                       toggleDetails(item.id)
+                     }}
+                   >
+                     {details.includes(item.id) ? 'Hide' : 'Action'}
+                   </CButton>
+                 </td>
+               )
+             },
+             details: (item) => {
+               return (
+                 <CCollapse visible={details.includes(item.id)}>
+                   <CCardBody>
+                      
+                     
+                     <CButton size="sm" color="info"  onClick={() => {
+             
+               history.push({
+                pathname: '/editAccount',
+                id: item.id,  // query string
+             
+              }); 
+                
+              }}>
+                       Update
+                     </CButton>{'    '}
+                      
+                     <CButton size="sm" color="danger" className="ml-1"  onClick={() => {
+                       deleteAccount(item.id)
+                     }}>
+                       Delete
+                     </CButton>
+                   </CCardBody>
+                 </CCollapse>
+               )
+             },
+           }}
+           selectable
+           sorterValue={{ column: 'name', state: 'asc' }}
+           tableFilter
+           tableHeadProps={{
+             color: ' ',
+           }}
+           tableProps={{
+             striped: true,
+             hover: true,
+           }} 
+               />
+           </div>
+       )
+       }
 
 export default AgenciesList;

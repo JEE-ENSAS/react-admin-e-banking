@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getListUsers, baseURL } from "../../services/AccountService";
-  
+
+import { useHistory } from "react-router-dom";
 function AccountForm() {
   const Swal = require("sweetalert2");
-
+  const history = useHistory();
   const accountNumber = useRef(null);
   const balance = useRef(null);
   const currency = useRef(null);
@@ -18,12 +19,21 @@ function AccountForm() {
 
   async function postData() {
     try {
+      const data = {
+        accountNumber: accountNumber.current.value,
+        balance: balance.current.value,
+        creationDate: new Date(),
+        currency: currency.current.value,
+        type: type.current.value,
+        userId: userId.current.value,
+      };
+
       const res = await fetch(baseURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) {
@@ -36,6 +46,9 @@ function AccountForm() {
         text: "New account has been added",
         icon: "success",
         confirmButtonText: "Ok",
+      });
+      history.push({
+        pathname: "/accounts",
       });
     } catch (err) {
       Swal.fire({

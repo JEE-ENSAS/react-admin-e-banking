@@ -78,7 +78,7 @@ function UserList({ from, step, setStep }) {
 
   const displayClientInfo = async (client) => {
     client = { ...client, id: client["_userId"] };
-    let myClient = userState["users"].find((user) => user.id === client['id']);
+    let myClient = userState["users"].find((user) => user.id === client["id"]);
     dispatch(fetchAccountByUser(client["id"]));
     dispatch({ type: FETCH_USER, payload: { user: myClient } });
     setDisplayClientInfoModal(!!client);

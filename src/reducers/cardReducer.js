@@ -18,6 +18,7 @@ const initialState = {
 const cardReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
+  let cards = [];
   switch (type) {
     case FETCH_CARDS_BY_ACCOUNT_ID:
       return { ...state, cardsByUser: payload };
@@ -29,12 +30,14 @@ const cardReducer = (state = initialState, action) => {
       return { ...state, card: payload };
 
     case ENABLE_DISABLE_CARD:
-      let cards = state.cardsNotAccepted.map((el) =>
+      cards = [];
+      cards = state.cardsNotAccepted.map((el) =>
         el["id"] === payload["id"] ? { ...el, enabled: !el.enabled } : el
       );
       return { ...state, card: payload, cardsNotAccepted: cards };
 
     case ACCEPT_CARD:
+      cards = [];
       cards = state.cardsNotAccepted.filter(
         (el) => el["cardNumber"] !== payload["cardNumber"]
       );
@@ -44,10 +47,11 @@ const cardReducer = (state = initialState, action) => {
       return { ...state, cardDetails: payload };
 
     case UPDATE_CARD:
+      cards = [];
       cards = state.cardsNotAccepted.map((el) =>
         el["cardNumber"] === payload["cardNumber"] ? { ...payload } : el
-      );
-      return { ...state, cardDetails: payload, cardsNotAccepted: cards };
+      ); 
+      return { ...state, cardDetails: payload };
 
     default:
       return { ...state };

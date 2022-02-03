@@ -10,3 +10,5 @@ export const TRANSFERT_CLIENT_URL =
   "https://transfer-client-service.herokuapp.com/transfer-client/";
 export const TRANSFERT_AGENT_URL =
   "https://my-transfert-agent-service.herokuapp.com/api/transfer-agent/"; 
+  export const AGENCY_URL = "https://my-agency-service.herokuapp.com/Agency/";
+ 
