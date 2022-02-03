@@ -16,10 +16,10 @@ const DefaultLayout = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListAgenciesAction());
     dispatch(fetchAllUsers());
     dispatch(fetchCardsNotAccepted());
     dispatch(getListTransfersAction());
+    dispatch(getListAgenciesAction());
   }, []);
 
   return (

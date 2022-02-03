@@ -5,7 +5,7 @@ import {
   enabledAccount,
   disabledAccount,
 } from "../../services/AccountService";
-import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
+import { CCollapse, CButton, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
@@ -48,9 +48,6 @@ function AccountsList() {
       _props: { color: "", className: "fw-semibold" },
     },
   ];
-  const getBadge = (isEnabled) => {
-    return isEnabled ? "success" : "warning";
-  };
 
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
@@ -120,29 +117,14 @@ function AccountsList() {
           hover: true,
         }}
         scopedColumns={{
-          
           Type: (item) => {
             console.log(item);
-             
-            return(
-            <td>
-            
-              
-                {item.type}
-              
-            </td>
-          )},
-          enabled: (item) =>{
-            
-            return(
-            
-            
-            
-            <td>
-              {item.enabled ? "Active" : "Not Active"}
-            </td>
-            
-          )},
+
+            return <td>{item.type}</td>;
+          },
+          enabled: (item) => {
+            return <td>{item.enabled ? "Active" : "Not Active"}</td>;
+          },
           show_details: (item) => {
             return (
               <td className="py-2">
@@ -173,13 +155,13 @@ function AccountsList() {
                     onClick={() => {
                       history.push({
                         pathname: "/editAccount",
-                        id: item.id, // query string
+                        id: item.id,
                       });
                     }}
                   >
                     Update
                   </CButton>
-                  {"    "}
+
                   <CButton
                     size="sm"
                     color="success"
@@ -190,7 +172,7 @@ function AccountsList() {
                   >
                     Activate
                   </CButton>
-                  {"    "}
+
                   <CButton
                     size="sm"
                     color="warning"
@@ -200,7 +182,7 @@ function AccountsList() {
                   >
                     Desactivate
                   </CButton>
-                  {"    "}
+
                   <CButton
                     size="sm"
                     color="danger"

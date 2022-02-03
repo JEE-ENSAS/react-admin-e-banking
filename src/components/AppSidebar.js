@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import ModalTransfer from "src/views/transfer/ModalTransfer";
 import classNames from "classnames";
 import { SET_TRANSFERT_INFO } from "src/actions/types";
+import EbankingLogo from 'src/assets/e-banking-ensa.svg'
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,11 @@ const AppSidebar = () => {
       >
         <CSidebarBrand className="d-none d-md-flex" to="/">
           <Link to="/">
-            <p className="banking-logo"><img src=""></img></p>
+            <img
+              src={EbankingLogo}
+              style={{ height: "3.5em" }}
+              alt="banking-logo"
+            />
           </Link>
         </CSidebarBrand>
         <CSidebarNav>

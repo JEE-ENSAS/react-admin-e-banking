@@ -10,11 +10,14 @@ class AgencyService {
   };
 
   getListAgencies = async () => {
-    const { data, error } = await http.get(AGENCY_URL+"getAll");
+    const { data, error } = await http.get(AGENCY_URL + "getAll");
     return { data, error };
   };
 
-  
+  createAgency = async (agency) => {
+    const { data, error } = await http.post(AGENCY_URL + "add", agency );
+    return { data, error };
+  };
 }
 
 export default new AgencyService();

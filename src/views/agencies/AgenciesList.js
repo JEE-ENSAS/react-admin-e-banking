@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CSmartTable } from '@coreui/react-pro'
-import { getListAgencies  } from '../../services/AgencyService';
+import { CSmartTable } from '@coreui/react-pro' 
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
 import { CCollapse ,CButton,CCardBody} from '@coreui/react';
@@ -54,8 +53,6 @@ function AgenciesList() {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-      //  deleteAccount(index);
-       
       }  
     })
   }

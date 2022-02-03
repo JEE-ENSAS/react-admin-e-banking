@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CSmartTable } from "@coreui/react-pro";
-import { CCollapse, CButton, CBadge, CCardBody } from "@coreui/react";
+import { CCollapse, CButton,  CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "../../helpers/BtnPlus";

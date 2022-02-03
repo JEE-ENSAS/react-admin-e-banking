@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -108,12 +107,11 @@ const Login = () => {
                     <h2>E-Banking</h2>
                     <be></be>
                     <p>
-                    Thanks to the e-banking app, find all the functions of e-banking on your pc,
-                     smartphone or tablet. 
-                     With the e-banking application, you have all the functions of e-banking, 
-                     even when you are on the move.
+                      Thanks to the e-banking app, find all the functions of
+                      e-banking on your pc, smartphone or tablet. With the
+                      e-banking application, you have all the functions of
+                      e-banking, even when you are on the move.
                     </p>
-                    
                   </div>
                 </CCardBody>
               </CCard>
