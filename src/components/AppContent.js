@@ -3,14 +3,12 @@ import { Route, Switch } from "react-router-dom";
 import { CContainer, CSpinner } from "@coreui/react";
 import routes from "../routes";
 import { PrivateRoute } from "src/helpers/PrivateRoute";
-import Users from "src/views/users/Users";
 
 const AppContent = () => {
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
         <Switch>
-          <Route name="dashboard" path="/" component={Users} />
           {routes.map((route, idx) => {
             return !route.private ? (
               <Route
