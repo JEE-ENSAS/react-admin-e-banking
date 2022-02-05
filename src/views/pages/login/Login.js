@@ -105,7 +105,7 @@ const Login = () => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>E-Banking</h2>
-                    <be></be>
+                     
                     <p>
                       Thanks to the e-banking app, find all the functions of
                       e-banking on your pc, smartphone or tablet. With the

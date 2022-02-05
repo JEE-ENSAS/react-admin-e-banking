@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { getListUsers, baseURL } from "../../services/AccountService";
 
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 function AccountForm() {
   const Swal = require("sweetalert2");
   const history = useHistory();
@@ -10,12 +11,14 @@ function AccountForm() {
   const currency = useRef(null);
   const userId = useRef(null);
   const type = useRef(null);
-
+ 
+  const clientState = useSelector(state=> state['userReducer'] )
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getListUsers().then((items) => setList(items));
-  }, []);
+    setList([...clientState.users]);
+  }, [clientState.users]);
+
 
   async function postData() {
     try {

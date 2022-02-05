@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { CSmartTable } from "@coreui/react-pro";
-import {
-  getListAccounts,
-  enabledAccount,
-  disabledAccount,
-} from "../../services/AccountService";
+import { enabledAccount, disabledAccount } from "../../services/AccountService";
 import { CCollapse, CButton, CCardBody } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import BtnPlus from "src/helpers/BtnPlus";
 import { DateTimeFormat } from "src/helpers/DateTimeFormat";
+import { useDispatch, useSelector } from "react-redux";
+import { getListAccountsAction } from "src/actions/accountAction";
 
-function AccountsList() {
+const AccountsList = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  const accountState = useSelector((state) => state["accountReducer"]);
   const [list, setList] = useState([]);
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    getListAccounts()
-      .then((items) => {
-        if (items && items.length > 0) {
-          items.forEach((item) => {
-            item.creationDate = DateTimeFormat(item.creationDate);
-            return item;
-          });
-        }
-
-        return items;
-      })
-      .then((items) => setList(items));
+    dispatch(getListAccountsAction());
   }, []);
+
+  useEffect(() => {
+    let items = [];
+    if (accountState.allAccounts.length > 0) {
+      items = accountState.allAccounts.map((item) => {
+        item.creationDate = DateTimeFormat(item.creationDate);
+        return item;
+      });
+    }
+    setList(items);
+  }, [accountState.allAccounts]);
 
   const columns = [
     { key: "accountNumber" },
@@ -75,6 +75,7 @@ function AccountsList() {
       }
     });
   };
+
   const disableAccount = (index) => {
     Swal.fire({
       title: "Do you want to disable this account?",
@@ -90,6 +91,7 @@ function AccountsList() {
       }
     });
   };
+
   const deleteAccount = (index) => {
     Swal.fire({
       title: "Do you want to delete this account?",
@@ -97,6 +99,7 @@ function AccountsList() {
       confirmButtonText: "Delete",
     }).then((result) => {});
   };
+
   return (
     <>
       <div className="py-0 d-flex justify-content-between align-items-center ">
@@ -117,90 +120,80 @@ function AccountsList() {
           hover: true,
         }}
         scopedColumns={{
-          Type: (item) => {
-            console.log(item);
-
-            return <td>{item.type}</td>;
-          },
-          enabled: (item) => {
-            return <td>{item.enabled ? "Active" : "Not Active"}</td>;
-          },
-          show_details: (item) => {
-            return (
-              <td className="py-2">
+          Type: (item) => <td>{item.type}</td>,
+          enabled: (item) => <td>{item.enabled ? "Active" : "Not Active"}</td>,
+          show_details: (item) => (
+            <td className="py-2">
+              <CButton
+                color="primary"
+                variant="outline"
+                shape="square"
+                size="sm"
+                onClick={() => {
+                  toggleDetails(item.id);
+                }}
+              >
+                {details.includes(item.id) ? "Hide" : "Action"}
+              </CButton>
+            </td>
+          ),
+          details: (item) => (
+            <CCollapse visible={details.includes(item.id)}>
+              <CCardBody>
+                <p className="text-muted">
+                  Creation Date :{DateTimeFormat(item.creationDate)}
+                </p>
                 <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
                   size="sm"
+                  color="info"
                   onClick={() => {
-                    toggleDetails(item.id);
+                    history.push({
+                      pathname: "/editAccount",
+                      id: item.id,
+                    });
                   }}
                 >
-                  {details.includes(item.id) ? "Hide" : "Action"}
+                  Update
                 </CButton>
-              </td>
-            );
-          },
-          details: (item) => {
-            return (
-              <CCollapse visible={details.includes(item.id)}>
-                <CCardBody>
-                  <p className="text-muted">
-                    Creation Date :{DateTimeFormat(item.creationDate)}
-                  </p>
-                  <CButton
-                    size="sm"
-                    color="info"
-                    onClick={() => {
-                      history.push({
-                        pathname: "/editAccount",
-                        id: item.id,
-                      });
-                    }}
-                  >
-                    Update
-                  </CButton>
 
-                  <CButton
-                    size="sm"
-                    color="success"
-                    className="ml-1"
-                    onClick={() => {
-                      enableAccount(item.id);
-                    }}
-                  >
-                    Activate
-                  </CButton>
+                <CButton
+                  size="sm"
+                  color="success"
+                  className="ml-1"
+                  onClick={() => {
+                    enableAccount(item.id);
+                  }}
+                >
+                  Activate
+                </CButton>
 
-                  <CButton
-                    size="sm"
-                    color="warning"
-                    onClick={() => {
-                      disableAccount(item.id);
-                    }}
-                  >
-                    Desactivate
-                  </CButton>
+                <CButton
+                  size="sm"
+                  color="warning"
+                  onClick={() => {
+                    disableAccount(item.id);
+                  }}
+                >
+                  Desactivate
+                </CButton>
 
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="ml-1"
-                    onClick={() => {
-                      deleteAccount(item.id);
-                    }}
-                  >
-                    Delete
-                  </CButton>
-                </CCardBody>
-              </CCollapse>
-            );
-          },
+                <CButton
+                  size="sm"
+                  color="danger"
+                  className="ml-1"
+                  onClick={() => {
+                    deleteAccount(item.id);
+                  }}
+                >
+                  Delete
+                </CButton>
+              </CCardBody>
+            </CCollapse>
+          ),
         }}
       />
     </>
   );
-}
+};
 
 export default AccountsList;

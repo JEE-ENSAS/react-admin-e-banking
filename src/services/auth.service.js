@@ -1,7 +1,7 @@
 import { AUTH_URL } from ".";
 import http from "../http-common";
 
- 
+ const API_GATE_WAY ="https://my-api-gateway-ttt.herokuapp.com/api/auth/"
 class AuthService {
   login = async (loginForm) => {
     const { data, error } = await http.post(AUTH_URL + 'signin', loginForm);

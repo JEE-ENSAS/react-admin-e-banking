@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
-import { getListUsers } from "../../services/AccountService";
-import Swal from "sweetalert2";
+ import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createAgencyAction } from "src/actions/agencyAction";
 
 function AgencyForm() {
@@ -14,11 +13,11 @@ function AgencyForm() {
   const city = useRef(null);
   const idAgent = useRef(null);
 
+  const clientState = useSelector(state=> state['userReducer'] )
   const [list, setList] = useState([]);
-
   useEffect(() => {
-    getListUsers().then((items) => setList(items));
-  }, []);
+    setList([...clientState.users]);
+  }, [clientState.users]);
 
   const createAgency = async () => {
     const data = {

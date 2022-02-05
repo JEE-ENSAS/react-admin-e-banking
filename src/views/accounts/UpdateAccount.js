@@ -6,6 +6,7 @@ import {
 } from "../../services/AccountService";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 function UpdateAccount() {
   const location = useLocation();
@@ -21,11 +22,13 @@ function UpdateAccount() {
   const userId = useRef(null);
   const type = useRef(null);
 
+  const clientState = useSelector(state=> state['userReducer'] )
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getListUsers().then((items) => setList(items));
-  }, []);
+    setList([...clientState.users]);
+  }, [clientState.users]);
+
 
   async function postData() {
     try {

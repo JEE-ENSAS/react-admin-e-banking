@@ -15,7 +15,7 @@ const accountReducer = (state = initialState, action) => {
 
   switch (type) {
     case FETCH_ALL_ACCOUNTS:
-      return { ...state, allAccounts: payload };
+      return { ...state, allAccounts: [...payload] };
 
     case FETCH_ACCOUNTS_BY_USER:
       return { ...state, accountsByUser: payload };

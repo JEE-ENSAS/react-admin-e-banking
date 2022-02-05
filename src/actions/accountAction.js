@@ -62,7 +62,7 @@ export const getListAccountsAction = () => async (dispatch) => {
         type: ERROR_ACTION,
         payload: error.message,
       });
-      return Promise.resolve(error);
+      return Promise.reject(error);
     } else {
       dispatch({
         type: FETCH_ALL_ACCOUNTS,
