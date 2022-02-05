@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { getParameter } from "../../services/SettingsService";
- import CIcon from "@coreui/icons-react";
+import CIcon from "@coreui/icons-react";
 import { cilSettings } from "@coreui/icons";
 import { CCol, CRow } from "@coreui/react";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 
 function Setting() {
   const baseURL =
@@ -28,14 +28,33 @@ function Setting() {
     getParameter().then((items) => setList(items));
   }, []);
 
-  async function postData() {
+  async function updateSettings() {
     try {
+      const settingData = {
+        id: list.id,
+        maxAmountForCashToCash: maxAmountForCashToCash.current.value,
+        maxAmountForCashToAccount: maxAmountForCashToAccount.current.value,
+        maxAmountForAccountToCash: maxAmountForAccountToCash.current.value,
+        maxAmountForAccountToAccount:
+          maxAmountForAccountToAccount.current.value,
+        maxHoldingTimeForCashToCash: maxAmountForCashToCash.current.value,
+        maxHoldingTimeForCashToAccount: maxAmountForCashToCash.current.value,
+        maxHoldingTimeForAccountToCash: maxAmountForCashToCash.current.value,
+        maxHoldingTimeForAccountToAccount: maxAmountForCashToCash.current.value,
+        transferPercentageForCashToCash: maxAmountForCashToCash.current.value,
+        transferPercentageForCashToAccount:
+          maxAmountForCashToCash.current.value,
+        transferPercentageForAccountToAccount:
+          maxAmountForCashToCash.current.value,
+        transferPercentageForAccountToCash:
+          maxAmountForCashToCash.current.value,
+      };
       const res = await fetch(baseURL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(settingData),
       });
 
       if (!res.ok) {
@@ -229,7 +248,7 @@ function Setting() {
         <div className="form-group">
           <button
             className="btn btn-secondary btn-lg btn-block"
-            onClick={postData}
+            onClick={() => updateSettings()}
           >
             Update Settings
           </button>
