@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import {
   CAvatar,
   CCard,
@@ -43,8 +43,7 @@ import avatar3 from "src/assets/images/avatars/3.jpg";
 import avatar4 from "src/assets/images/avatars/4.jpg";
 import avatar5 from "src/assets/images/avatars/5.jpg";
 import avatar6 from "src/assets/images/avatars/6.jpg";
-
-const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
+ 
 
 const Dashboard = () => {
   const progressGroupExample1 = [
@@ -156,8 +155,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <>
-      <WidgetsDropdown />
+    <> 
 
       <CRow>
         <CCol xs>
