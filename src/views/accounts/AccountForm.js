@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { getListUsers, baseURL } from "../../services/AccountService";
+import {  baseURL } from "../../services/AccountService";
 
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";

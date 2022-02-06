@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
-  getListUsers,
   getAccount,
   updateURL,
 } from "../../services/AccountService";
