@@ -19,7 +19,7 @@
     "changelog": "auto-changelog --starting-version 4.1.0 --commit-limit false --hide-credit",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "npm install react-scripts && react-scripts start",
+    "start": "react-scripts start",
     "start:n17": "react-scripts --openssl-legacy-provider start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
@@ -57,7 +57,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "simplebar-react": "^2.3.6",
-    "sweetalert2": "^11.3.3"
+    "sweetalert2": "^11.3.3",
+    "react-scripts": "^4.0.3"
   },
   "devDependencies": {
     "auto-changelog": "~2.3.0",
@@ -65,7 +66,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "2.5.0",
-    "react-scripts": "^4.0.3",
     "sass": "^1.43.5"
   },
   "engines": {
