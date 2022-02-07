@@ -1,7 +1,6 @@
 {
   "name": "e-banking",
   "version": "4.1.1",
-  "proxy": "https://my-api-gateway-ttt.herokuapp.com",
   "description": "CoreUI Free React Admin Template",
   "homepage": ".",
   "bugs": {
