@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 function Setting() {
   const baseURL =
-    "https://my-parametrage-service.herokuapp.com/Parameter/update";
+    "https://my-setting-service-t.herokuapp.com/Parameter/update";
 
   const maxAmountForCashToCash = useRef(null);
   const maxAmountForCashToAccount = useRef(null);
@@ -25,7 +25,9 @@ function Setting() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getParameter().then((items) => setList(items));
+    getParameter().then((items) =>{ 
+      console.log(items.data);
+      setList(items.data);});
   }, []);
 
   async function updateSettings() {
