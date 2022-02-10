@@ -13,7 +13,7 @@ let initialState = {
     soustraction: "FROM_ME",
     price: 0,
     motif: "",
-    operationType: "",
+    operationType: "AccountToAccount",
   },
 
   transfers: [],

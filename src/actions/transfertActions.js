@@ -28,3 +28,17 @@ export const createTransferAction = (payload) => async (dispatch) => {
     dispatch({ type: ERROR_ACTION, payload: error.message });
   }
 };
+
+export const transferFromCashToAccountAction =
+  (payload) => async (dispatch) => {
+    try {
+      const { data, error } = await TransferService.createTransferFromCahToAccount(payload);
+      const params = {
+        type: error ? ERROR_ACTION : CREATE_TRANSFER,
+        payload: error ? error : { item: data },
+      };
+      dispatch(params);
+    } catch (error) {
+      dispatch({ type: ERROR_ACTION, payload: error.message });
+    }
+  };

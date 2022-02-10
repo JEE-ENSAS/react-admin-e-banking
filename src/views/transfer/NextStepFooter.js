@@ -11,13 +11,12 @@ const NextStepFooter = ({ step, setStep }) => {
   const dispatch = useDispatch();
 
   const transferHandler = () => {
-    console.log(dataSource, dataDestination, transferInfo);
     const payload = {
-      accountId: dataSource.compte["id"],
-      destinationAccountId: dataDestination.compte["id"],
-      amount: transferInfo.price,
-      motif: transferInfo.motif,
-      soustraction: transferInfo.soustraction,
+      amount:  parseInt(transferInfo.price) ,
+      accountFrom: dataSource.compte["accountNumber"],
+      accountTo: dataDestination.compte["accountNumber"],
+      transferType: transferInfo.operationType,
+      costType: transferInfo.soustraction,
     };
     dispatch(createTransferAction(payload));
   };
@@ -45,15 +44,14 @@ const NextStepFooter = ({ step, setStep }) => {
     );
   }
 
-  const { motif, price, soustraction } = transferInfo;
+  const { price, soustraction } = transferInfo;
   if (step === 2) {
     return (
       <CButton
-        disabled={
-          motif.length < 4 || parseInt(price) <= 0 || soustraction.length < 4
-        }
+        disabled={parseInt(price) <= 0 || soustraction.length < 4}
         color="primary"
         onClick={() => transferHandler()}
+        className="cursor-pointer"
       >
         Enregistrer
       </CButton>

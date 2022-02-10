@@ -21,12 +21,13 @@ import { Link } from "react-router-dom";
 import ModalTransfer from "src/views/transfer/ModalTransfer";
 import classNames from "classnames";
 import { SET_TRANSFERT_INFO } from "src/actions/types";
-import EbankingLogo from 'src/assets/e-banking-ensa.svg'
+import EbankingLogo from "src/assets/e-banking-ensa.svg";
+import CashToAccountModal from "src/views/transfer/CashToAccountModal";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
- 
+
   const { sidebarShow, sidebarUnfoldable } = useSelector(
     (state) => state["userReducer"]
   );
@@ -78,37 +79,40 @@ const AppSidebar = () => {
 export default memo(AppSidebar);
 
 const TypeTransfer = ({ visible, setVisible }) => {
-
   const dispatch = useDispatch();
 
   const [types, setTypes] = useState([
-    { id: 1, label: "Compte to Compte", default: true },
-    { id: 2, label: "Cash to Compte", default: false },
+    { id: 1, label: "AccountToAccount", default: true },
+    { id: 2, label: "CashToAccount", default: false },
     { id: 3, label: "Cash to Cash", default: false },
   ]);
 
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
+  const [visibleCashToAccount, setVisibleCashToAccount] = useState(false);
   const [step, setStep] = useState(0);
 
-  const changeTypeHandler=(type )=>{
-      const myTypes = types.map((el) =>
-        el.id === type.id ? { ...el, default: true } : { ...el, default:false }
-      );
-      setTypes(myTypes);
-  }
+  const changeTypeHandler = (type) => {
+    const myTypes = types.map((el) =>
+      el.id === type.id ? { ...el, default: true } : { ...el, default: false }
+    );
+    setTypes(myTypes);
+  };
 
-  const nextByType = ( )=>{
-    const selectedType= types.find((el) => el.default)
+  const nextByType = () => {
+    const selectedType = types.find((el) => el.default);
     dispatch({
       type: SET_TRANSFERT_INFO,
       payload: { field: "operationType", value: selectedType.label },
     });
-    if(selectedType  && selectedType.label === 'Compte to Compte' ){
-
-      setVisibleFullScreen(true)
-    }   
-  }
-
+    if (selectedType && selectedType.label === "AccountToAccount") {
+      setVisibleFullScreen(true);
+      setVisible(false)
+    }
+    if (selectedType && selectedType.label === "CashToAccount") {
+      setVisibleCashToAccount(true);
+      setVisible(false)
+    }
+  };
 
   return (
     <>
@@ -140,12 +144,20 @@ const TypeTransfer = ({ visible, setVisible }) => {
         </CModalFooter>
       </CModal>
 
-      <ModalTransfer
-        visible={visibleFullScreen}
-        setVisible={setVisibleFullScreen}
-        step={step}
-        setStep={setStep}
-      />
+      {visibleFullScreen && (
+        <ModalTransfer
+          visible={visibleFullScreen}
+          setVisible={setVisibleFullScreen}
+          step={step}
+          setStep={setStep}
+        />
+      )}
+      {visibleCashToAccount && (
+        <CashToAccountModal
+          visible={visibleCashToAccount}
+          setVisible={setVisibleCashToAccount}
+        />
+      )}
     </>
   );
 };

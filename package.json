@@ -1,8 +1,9 @@
 {
   "name": "e-banking",
   "version": "4.1.1",
+  "proxy": "https://my-api-gateway-ttt.herokuapp.com",
   "description": "CoreUI Free React Admin Template",
-  "homepage": "https://jee-ensas.github.io/",
+  "homepage": ".",
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },
@@ -13,8 +14,6 @@
   "license": "MIT",
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build",
     "build": "node scripts/build.js",
     "build:n17": "react-scripts --openssl-legacy-provider build",
     "changelog": "auto-changelog --starting-version 4.1.0 --commit-limit false --hide-credit",
@@ -72,7 +71,6 @@
     "file-loader": "6.1.1",
     "font-awesome": "^4.7.0",
     "fs-extra": "^9.0.1",
-    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.0",
@@ -119,6 +117,7 @@
   },
   "devDependencies": {
     "auto-changelog": "~2.3.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "2.5.0",

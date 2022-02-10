@@ -91,57 +91,59 @@ const CardPrice = () => {
     dispatch({ type: SET_TRANSFERT_INFO, payload: { value, field } });
   };
   return (
-    <CCard className="text-center">
-      <CCardHeader>
-        <CInputGroup className="">
-          <CInputGroupText component="label" htmlFor="inputGroupSelect01">
-            Soustraction
-          </CInputGroupText>
-          <CFormSelect
-            id="inputGroupSelect01"
-            value={transferInfo.soustraction}
-            onChange={(e) =>
-              dispatchTransferHandler(e.target.value, "soustraction")
-            }
-          >
-            <option value="FROM_ME"> From Source </option>
-            <option value="FROM_OTHER">From Destinataire </option>
-            <option value="FROM_BOTH"> Both </option>
-          </CFormSelect>
-        </CInputGroup>
-      </CCardHeader>
-      <CCardBody>
-        <CCardText className="py-5">
-          <CForm>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>
-                <CIcon icon={cilDollar} />
-              </CInputGroupText>
-              <CFormInput
-                placeholder="prix"
-                value={transferInfo.price}
-                onChange={(e) =>
-                  dispatchTransferHandler(e.target.value, "price")
-                }
-              />
-            </CInputGroup>
-            <CInputGroup style={{ marginTop: "2.8rem" }}>
-              <CInputGroupText>Motif</CInputGroupText>
-              <CFormInput
-                placeholder="Motif"
-                value={transferInfo.motif}
-                onChange={(e) =>
-                  dispatchTransferHandler(e.target.value, "motif")
-                }
-              />
-            </CInputGroup>
-          </CForm>
-        </CCardText>
-      </CCardBody>
+    <form>
+      <CCard className="text-center">
+        <CCardHeader>
+          <CInputGroup className="">
+            <CInputGroupText component="label" htmlFor="inputGroupSelect01">
+              Soustraction
+            </CInputGroupText>
+            <CFormSelect
+              id="inputGroupSelect01"
+              value={transferInfo.soustraction}
+              onChange={(e) =>
+                dispatchTransferHandler(e.target.value, "soustraction")
+              }
+            >
+              <option value="FROM_ME"> From Source </option>
+              <option value="FROM_OTHER">From Destinataire </option>
+              <option value="FROM_BOTH"> Both </option>
+            </CFormSelect>
+          </CInputGroup>
+        </CCardHeader>
+        <CCardBody>
+          <CCardText className="py-5">
+            <CForm>
+              <CInputGroup className="mb-3">
+                <CInputGroupText>
+                  <CIcon icon={cilDollar} />
+                </CInputGroupText>
+                <CFormInput
+                  placeholder="prix"
+                  value={transferInfo.price}
+                  onChange={(e) =>
+                    dispatchTransferHandler(e.target.value, "price")
+                  }
+                />
+              </CInputGroup>
+              <CInputGroup style={{ marginTop: "2.8rem" }}>
+                <CInputGroupText>Motif</CInputGroupText>
+                <CFormInput
+                  placeholder="Motif"
+                  value={transferInfo.motif}
+                  onChange={(e) =>
+                    dispatchTransferHandler(e.target.value, "motif")
+                  }
+                />
+              </CInputGroup>
+            </CForm>
+          </CCardText>
+        </CCardBody>
 
-      <CCardFooter className="text-medium-emphasis">
-        Lorem ipsum dolor sit amet.
-      </CCardFooter>
-    </CCard>
+        <CCardFooter className="text-medium-emphasis">
+          Lorem ipsum dolor sit amet.
+        </CCardFooter>
+      </CCard>
+    </form>
   );
 };
