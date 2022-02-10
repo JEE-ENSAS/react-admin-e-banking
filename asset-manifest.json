@@ -7,15 +7,15 @@
     "main.css": "/react-admin-e-banking/static/css/main.535e4cc5.chunk.css",
     "main.js": "/react-admin-e-banking/static/js/main.19cb1cf6.chunk.js",
     "main.js.map": "/react-admin-e-banking/static/js/main.19cb1cf6.chunk.js.map",
-    "runtime-main.js": "/react-admin-e-banking/static/js/runtime-main.5a412324.js",
-    "runtime-main.js.map": "/react-admin-e-banking/static/js/runtime-main.5a412324.js.map",
+    "runtime-main.js": "/react-admin-e-banking/static/js/runtime-main.6d24c8ef.js",
+    "runtime-main.js.map": "/react-admin-e-banking/static/js/runtime-main.6d24c8ef.js.map",
     "static/js/4.a0181022.chunk.js": "/react-admin-e-banking/static/js/4.a0181022.chunk.js",
     "static/js/4.a0181022.chunk.js.map": "/react-admin-e-banking/static/js/4.a0181022.chunk.js.map",
     "static/css/5.2082a8e8.chunk.css": "/react-admin-e-banking/static/css/5.2082a8e8.chunk.css",
     "static/js/5.1f60ac13.chunk.js": "/react-admin-e-banking/static/js/5.1f60ac13.chunk.js",
     "static/js/5.1f60ac13.chunk.js.map": "/react-admin-e-banking/static/js/5.1f60ac13.chunk.js.map",
-    "static/js/6.9eda742a.chunk.js": "/react-admin-e-banking/static/js/6.9eda742a.chunk.js",
-    "static/js/6.9eda742a.chunk.js.map": "/react-admin-e-banking/static/js/6.9eda742a.chunk.js.map",
+    "static/js/6.2c5f2af3.chunk.js": "/react-admin-e-banking/static/js/6.2c5f2af3.chunk.js",
+    "static/js/6.2c5f2af3.chunk.js.map": "/react-admin-e-banking/static/js/6.2c5f2af3.chunk.js.map",
     "static/js/7.0d47d53e.chunk.js": "/react-admin-e-banking/static/js/7.0d47d53e.chunk.js",
     "static/js/7.0d47d53e.chunk.js.map": "/react-admin-e-banking/static/js/7.0d47d53e.chunk.js.map",
     "static/js/8.3095cd91.chunk.js": "/react-admin-e-banking/static/js/8.3095cd91.chunk.js",
@@ -67,7 +67,7 @@
     "static/media/style.scss": "/react-admin-e-banking/static/media/fontawesome-webfont.f691f37e.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.5a412324.js",
+    "static/js/runtime-main.6d24c8ef.js",
     "static/js/4.a0181022.chunk.js",
     "static/css/main.535e4cc5.chunk.css",
     "static/js/main.19cb1cf6.chunk.js"
