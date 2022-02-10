@@ -1,14 +1,14 @@
 import Swal from "sweetalert2";
  
 export const baseURL =
-  "https://my-account-service-t.herokuapp.com/Account/create";
+  "https://my-account-service-tt.herokuapp.com/Account/create";
 
 export const updateURL =
-  "https://my-account-service-t.herokuapp.com/Account/update";
+  "https://my-account-service-tt.herokuapp.com/Account/update";
 
 export function getAccount(id) {
   return fetch(
-    "https://my-account-service-t.herokuapp.com/Account/get?id=" + id
+    "https://my-account-service-tt.herokuapp.com/Account/get?id=" + id
   ).then((data) => data.json());
 }
 export function enabledAccount(id) {
@@ -18,7 +18,7 @@ export function enabledAccount(id) {
     body: JSON.stringify({ id: id }),
   };
   fetch(
-    "https://my-account-service-t.herokuapp.com/Account/enable",
+    "https://my-account-service-tt.herokuapp.com/Account/enable",
     requestOptions
   ).then((response) => response.json());
 
@@ -32,7 +32,7 @@ export function disabledAccount(id) {
     body: JSON.stringify({ id: id }),
   };
   fetch(
-    "https://my-account-service.herokuapp.com/Account/disable",
+    "https://my-account-service-tt.herokuapp.com/Account/disable",
     requestOptions
   ).then((response) => response.json());
 
