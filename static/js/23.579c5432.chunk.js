@@ -1,2 +1,0 @@
-(this["webpackJsonpe-banking"]=this["webpackJsonpe-banking"]||[]).push([[23],{794:function(n,e,t){"use strict";t.r(e);t(1);var i=t(627),s=t(26);e.default=function(){return Object(s.jsx)("div",{children:Object(s.jsx)(i.a,{})})}}}]);
-//# sourceMappingURL=23.579c5432.chunk.js.map
